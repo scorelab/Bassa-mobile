@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import configureStore from './store/configureStore';
-import RootContainer from './containers/RootContainer';
+import AppWithNavigationState from './containers/RootContainer';
 
 export const { store, persistor } = configureStore();
 
@@ -15,7 +15,7 @@ export default class App extends Component<Props> {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <RootContainer />
+          <AppWithNavigationState />
         </PersistGate>
       </Provider>
     );

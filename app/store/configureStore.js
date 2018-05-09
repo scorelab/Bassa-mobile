@@ -9,22 +9,23 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
+import { navMiddleware } from '../containers/RootContainer';
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
   const persistConfig = {
     key: 'root',
-    blacklist: [ ],
+    blacklist: ['nav'],
     storage: AsyncStorage,
   };
-  
+
   const persistedReducer = persistReducer(persistConfig, rootReducer);
 
   const store = createStore(
     persistedReducer,
     undefined,
     compose(
-      applyMiddleware(logger, sagaMiddleware),
+      applyMiddleware(logger, navMiddleware, sagaMiddleware),
     )
   );
 
@@ -32,7 +33,7 @@ export default function configureStore() {
 
   if (module.hot) {
     module.hot.accept(() => {
-      const nextRootReducer = rootReducer; 
+      const nextRootReducer = rootReducer;
       store.replaceReducer(nextRootReducer);
     });
   }

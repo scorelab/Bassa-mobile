@@ -4291,6 +4291,12 @@ react-navigation-deprecated-tab-navigator@1.2.0:
   dependencies:
     react-native-tab-view "^0.0.74"
 
+react-navigation-redux-helpers@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-navigation-redux-helpers/-/react-navigation-redux-helpers-1.0.6.tgz#427bd5a0d2bc3c4f5b6fd5c57fa4961b1ea45e1d"
+  dependencies:
+    invariant "^2.2.2"
+
 react-navigation-tabs@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.2.0.tgz#d25be64e01a728c893a93cfeee6b176ab74d67de"

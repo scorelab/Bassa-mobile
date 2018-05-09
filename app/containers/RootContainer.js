@@ -1,35 +1,33 @@
 // @flow
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers';
+
+import { AppNavigator } from './RootNavigator';
+
+export const navMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.nav,
+);
+const addListener = createReduxBoundAddListener('root');
 
 type Props = {};
-export default class RootContainer extends Component<Props> {
+class AppWithNavigationState extends Component<Props> {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Bassa
-        </Text>
-      </View>
-    );
+    return <AppNavigator navigation={{
+      dispatch: this.props.dispatch,
+      state: this.props.nav,
+      addListener,
+    }} />
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
+const mapStateToProps = state => ({
+  nav: state.nav,
 });
+
+export default connect(mapStateToProps)(AppWithNavigationState);
