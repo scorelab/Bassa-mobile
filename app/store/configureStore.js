@@ -1,7 +1,4 @@
-// @flow
-
 import { createStore, applyMiddleware, compose } from 'redux';
-import storage from 'redux-persist/lib/storage';
 import { AsyncStorage } from 'react-native';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -24,9 +21,7 @@ export default function configureStore() {
   const store = createStore(
     persistedReducer,
     undefined,
-    compose(
-      applyMiddleware(logger, navMiddleware, sagaMiddleware),
-    )
+    compose(applyMiddleware(logger, navMiddleware, sagaMiddleware)),
   );
 
   sagaMiddleware.run(rootSaga);
@@ -38,6 +33,6 @@ export default function configureStore() {
     });
   }
 
-  let persistor = persistStore(store)
-  return { store, persistor }
+  const persistor = persistStore(store);
+  return { store, persistor };
 }

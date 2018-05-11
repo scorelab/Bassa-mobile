@@ -1,9 +1,5 @@
-import {
-  StyleSheet,
-} from 'react-native';
-
-export const theme = {
+const theme = {
 
 };
 
-
+export default theme;

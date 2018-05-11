@@ -4,21 +4,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
-
-type Props = {};
-export default class Init extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Bassa
-        </Text>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -33,3 +20,18 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+type Props = {};
+class Init extends Component<Props> {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Bassa
+        </Text>
+      </View>
+    );
+  }
+}
+
+export default Init;

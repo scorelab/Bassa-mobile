@@ -8,3 +8,6 @@ A cross-platform mobile client for [Bassa](https://github.com/scorelab/Bassa)
 
 ## Tests
  - run ```yarn test``` or ```npm test```
+
+## Lint
+ - run ```yarn run lint``` or ```npm run lint```

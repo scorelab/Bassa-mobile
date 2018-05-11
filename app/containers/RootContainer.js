@@ -7,7 +7,7 @@ import {
   createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers';
 
-import { AppNavigator } from './RootNavigator';
+import AppNavigator from './RootNavigator';
 
 export const navMiddleware = createReactNavigationReduxMiddleware(
   'root',
@@ -22,7 +22,7 @@ class AppWithNavigationState extends Component<Props> {
       dispatch: this.props.dispatch,
       state: this.props.nav,
       addListener,
-    }} />
+    }} />;
   }
 }
 
