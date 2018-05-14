@@ -2,11 +2,9 @@
 import { userActions } from '../actions/types';
 
 const initialState = {
-  isAuthenticated: false,
-  isFetching: false,
-  error: null,
-  activeUser: {
+  currentUser: {
     username: '',
+    isAdmin: false,
     timestamp: null,
   },
 };

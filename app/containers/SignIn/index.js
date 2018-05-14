@@ -14,6 +14,7 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { signIn } from '../../actions/userActions';
 import { theme } from '../../styles';
@@ -54,13 +55,13 @@ class SignIn extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.startAnimation(), 1000);
+    setTimeout(() => this.startComponentAnimation(), 1000);
   }
 
   onSignInPress() {
     if (this.isValid()) {
       this.setState({ isLoading: true });
-      this.signInAnimation();
+      this.startSignInAnimation();
       this.props.signIn(this.state.username, this.state.password);
     }
   }
@@ -77,7 +78,7 @@ class SignIn extends Component {
     return true;
   }
 
-  startAnimation() {
+  startComponentAnimation() {
     Animated.timing(
       this.state.moveAnimation,
       {
@@ -101,7 +102,7 @@ class SignIn extends Component {
     ]).start();
   }
 
-  signInAnimation(reverse = false) {
+  startSignInAnimation(reverse = false) {
     Animated.timing(
       this.state.fadeAnimation,
       {

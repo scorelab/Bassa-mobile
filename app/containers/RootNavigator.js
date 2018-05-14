@@ -27,7 +27,6 @@ const Drawer = createDrawerNavigator(
 const AppNavigator = createStackNavigator({
   Init: { screen: Init },
   SignIn: { screen: SignIn },
-  //MainDrawer: {screen: CustomDrawer}
   MainDrawer: { screen: Drawer, navigationOptions: { header: null } },
 });
 

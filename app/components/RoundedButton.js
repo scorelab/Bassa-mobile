@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/dist/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { theme } from '../styles';
 
@@ -21,7 +21,7 @@ const RoundedButton = ({
         {icon ? <Icon
           name={icon}
           size={iconSize}
-          color="#FFFFFF" /> : null}
+          color='#FFFFFF' /> : null}
         <Text
           style={[icon ? styles.buttonTitlePaading : styles.buttonTitle, { color, fontSize }]}>
           {text}
