@@ -1,0 +1,3 @@
+[submodule "Bassa"]
+	path = Bassa
+	url = https://github.com/scorelab/Bassa.git
