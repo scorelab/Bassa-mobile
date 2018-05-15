@@ -215,7 +215,6 @@ class SignIn extends Component {
             {this.renderSignInnContainer()}
           </View>
           <LoadingIndicator
-            color={theme.PRIMARY_STATUS_BAR_COLOR}
             isVisible={this.state.isLoading} />
         </ScrollView>
       </ViewWrapper>

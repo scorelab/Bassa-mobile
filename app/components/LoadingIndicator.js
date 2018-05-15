@@ -2,10 +2,10 @@
 import React from 'react';
 import {
   View,
-  ActivityIndicator,
   Dimensions,
   StyleSheet,
 } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import PropTypes from 'prop-types';
 
 const HEIGHT: number = Dimensions.get('window').height;
@@ -28,19 +28,19 @@ const calculateTop = (position, marginTop) => {
 };
 
 const LoadingIndicator = ({
-  color, isVisible, position, marginTop,
+  color, isVisible, position, marginTop, size, type, style,
 }) => (
     <View
       pointerEvents={'none'} style={[
         styles.loaderContainer,
         { top: calculateTop(position, marginTop) },
       ]}>
-      <ActivityIndicator
-        animating={true}
-        color={color}
-        size='large'
-        style={{ opacity: isVisible ? 1 : 0 }}
-      />
+      <Spinner
+        style={style}
+        isVisible={isVisible}
+        size={size}
+        type={type}
+        color={color} />
     </View>
 );
 
@@ -49,11 +49,17 @@ LoadingIndicator.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   position: PropTypes.string,
   marginTop: PropTypes.number,
+  style: View.propTypes.style,
+  type: PropTypes.string,
+  size: PropTypes.number,
 };
 
 LoadingIndicator.defaultProps = {
   color: '#FFF',
   isVisible: false,
+  size: 60,
+  type: 'Bounce',
+  style: {},
   position: '',
   marginTop: 0,
 };
