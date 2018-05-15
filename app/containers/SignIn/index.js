@@ -68,11 +68,11 @@ class SignIn extends Component {
 
   isValid() {
     if (this.state.username === '') {
-      this.setState({ usernameError: 'Username is rwquired' });
+      this.setState({ usernameError: 'Username is required' });
       return false;
     }
     if (this.state.password === '') {
-      this.setState({ passwordError: 'Password is rwquired' });
+      this.setState({ passwordError: 'Password is required' });
       return false;
     }
     return true;

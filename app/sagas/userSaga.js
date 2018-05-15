@@ -16,12 +16,12 @@ function* signInUser({ payload }) {
 
       yield put(resetToMainDrawer());
     } else {
-      Alert.alert('Error', 'Authrntication failed!');
+      Alert.alert('Error', 'Authentication failed!');
       yield put(handleAuthFailure(response.problem));
       yield put(resetToSignIn());
     }
   } catch (error) {
-    Alert.alert('Error', 'Authrntication failed!');
+    Alert.alert('Error', 'Authentication failed!');
     yield put(handleAuthFailure(error));
     yield put(resetToSignIn());
   }
