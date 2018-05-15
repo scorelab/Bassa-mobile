@@ -14,7 +14,6 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import { signIn } from '../../actions/userActions';
 import { theme } from '../../styles';
@@ -42,7 +41,7 @@ class SignIn extends Component {
       fadeAnimation: new Animated.Value(0),
       slideAnimationLeft: new Animated.Value(0),
       slideAnimationRight: new Animated.Value(0),
-      movingContainer: 'right', // this is to identify which hidden container is moving when animating
+      movingContainer: 'right',
       username: '',
       password: '',
       usernameError: '',
