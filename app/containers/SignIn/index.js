@@ -14,15 +14,14 @@ import {
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from 'react-native-button';
 
 import { signIn } from '../../actions/userActions';
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
-import RoundedButton from '../../components/RoundedButton';
 
 const HEIGHT: number = Dimensions.get('window').height;
-const WIDTH: number = Dimensions.get('window').width;
 
 class SignIn extends Component {
   static navigationOptions = {
@@ -164,18 +163,20 @@ class SignIn extends Component {
             }}
           />
           <View style={styles.buttonContainer}>
-            <RoundedButton
-              text={'Sign In'}
-              width={200}
-              color={'#FFF'}
-              borderWidth={2}
-              onPress={this.onSignInPress} />
-            <RoundedButton
-              text={'Sign Up'}
-              width={200}
-              color={'#FFF'}
-              borderWidth={2}
-              onPress={this.onSignInPress} />
+            <Button
+              style={styles.buttonTitle}
+              containerStyle={styles.buttonWrapper}
+              onPress={this.onSignInPress}
+            >
+              Sign In
+            </Button>
+            <Button
+              style={styles.buttonTitle}
+              containerStyle={styles.buttonWrapper}
+              onPress={this.onSignInPress}
+            >
+              Sign Up
+            </Button>
           </View>
         </View>
       </Animated.View>
@@ -247,6 +248,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonWrapper: {
+    height: 35,
+    borderRadius: 100,
+    width: 200,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#FFF',
+    padding: 5,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  buttonTitle: {
+    fontWeight: '400',
+    textAlign: 'center',
+    color: '#FFF',
   },
   controlsContainer: {
     height: HEIGHT,
