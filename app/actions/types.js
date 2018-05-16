@@ -1,5 +1,16 @@
-// @flow
+export const appActions = {
+  SET_DRAWER_TAB: 'SET_DRAWER_TAB',
+  OPEN_DRAWER: 'Navigation/NAVIGATE/OPEN_DRAWER',
+  CLOSE_DRAWER: 'Navigation/NAVIGATE/CLOSE_DRAWER',
+};
 
-export default {
+export const userActions = {
+  USER_SIGN_IN: 'USER_SIGN_IN',
+  USER_SIGN_OUT: 'USER_SIGN_OUT',
+  AUTHENTICATE_USER_SUCCESS: 'AUTHENTICATE_USER_SUCCESS',
+  AUTHENTICATE_USER_FAIL: 'AUTHENTICATE_USER_FAIL',
+};
 
+export const tokenActions = {
+  SET_TOKEN_TO_HEADER: 'SET_TOKEN_TO_HEADER',
 };
