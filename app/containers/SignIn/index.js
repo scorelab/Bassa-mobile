@@ -111,7 +111,7 @@ class SignIn extends Component {
     ).start();
   }
 
-  renderSignInnContainer() {
+  renderSignInContainer() {
     return (
       <Animated.View
         pointerEvents={this.state.isLoading ? 'none' : 'auto'}
@@ -212,7 +212,7 @@ class SignIn extends Component {
               <Image
                 source={require('../../images/bassa.png')} />
             </Animated.View>
-            {this.renderSignInnContainer()}
+            {this.renderSignInContainer()}
           </View>
           <LoadingIndicator
             isVisible={this.state.isLoading} />

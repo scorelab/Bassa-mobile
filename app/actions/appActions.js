@@ -1,6 +1,8 @@
 // @flow
 import { StackActions, NavigationActions } from 'react-navigation';
 
+import { appActions } from './types';
+
 export const resetToSignIn = () => {
   return StackActions.reset({
     index: 0,
@@ -17,5 +19,24 @@ export const resetToMainDrawer = () => {
       NavigationActions.navigate({ routeName: 'MainDrawer' }),
     ],
   });
+};
+
+export const closeDrawer = () => {
+  return {
+    type: appActions.CLOSE_DRAWER,
+  };
+};
+
+export const openDrawer = () => {
+  return {
+    type: appActions.OPEN_DRAWER,
+  };
+};
+
+export const setDrawerTab = (tabName) => {
+  return {
+    type: appActions.SET_DRAWER_TAB,
+    payload: tabName,
+  };
 };
 

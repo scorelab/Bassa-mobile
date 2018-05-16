@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
 import { theme } from '../styles';
-import { resetToSignIn } from '../actions/initActions';
+import { resetToSignIn, closeDrawer } from '../actions/appActions';
 import { signOut } from '../actions/userActions';
 
 class CustomDrawer extends Component {
@@ -63,7 +63,7 @@ class CustomDrawer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   signOut: () => {
-    dispatch({ type: 'Navigation/NAVIGATE/CLOSE_DRAWER' });
+    dispatch(closeDrawer());
     dispatch(signOut());
     dispatch(resetToSignIn());
   },

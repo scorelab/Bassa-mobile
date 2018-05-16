@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import UserService from '../services/userService';
 import { userActions } from '../actions/types';
-import { resetToSignIn, resetToMainDrawer } from '../actions/initActions';
+import { resetToSignIn, resetToMainDrawer } from '../actions/appActions';
 import { setTokenToHeader } from '../actions/tokenActions';
 import { handleAuthFailure } from '../actions/userActions';
 

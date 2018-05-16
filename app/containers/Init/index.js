@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { resetToSignIn } from '../../actions/initActions';
+import { resetToSignIn } from '../../actions/appActions';
 import ViewWrapper from '../../components/ViewWrapper';
 import { theme } from '../../styles';
 

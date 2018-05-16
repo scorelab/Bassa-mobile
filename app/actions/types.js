@@ -1,5 +1,7 @@
 export const appActions = {
   SET_DRAWER_TAB: 'SET_DRAWER_TAB',
+  OPEN_DRAWER: 'Navigation/NAVIGATE/OPEN_DRAWER',
+  CLOSE_DRAWER: 'Navigation/NAVIGATE/CLOSE_DRAWER',
 };
 
 export const userActions = {
