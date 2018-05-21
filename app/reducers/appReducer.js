@@ -1,7 +1,8 @@
-import { userActions } from '../actions/types';
+import { userActions, appActions } from '../actions/types';
 
 const initialState = {
   isSignedIn: false,
+  selectedDrawer: 0,
 };
 
 function appReducer(state = initialState, action) {
@@ -9,7 +10,9 @@ function appReducer(state = initialState, action) {
     case userActions.AUTHENTICATE_USER_SUCCESS:
       return { ...state, isSignedIn: true };
     case userActions.USER_SIGN_OUT:
-      return { ...state, isSignedIn: false };
+      return { ...state, ...initialState };
+    case appActions.SET_DRAWER_TAB:
+      return { ...state, selectedDrawer: action.payload };
     default:
       return state;
   }
