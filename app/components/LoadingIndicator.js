@@ -3,6 +3,7 @@ import React from 'react';
 import {
   View,
   Dimensions,
+  ViewPropTypes,
   StyleSheet,
 } from 'react-native';
 import Spinner from 'react-native-spinkit';
@@ -49,7 +50,7 @@ LoadingIndicator.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   position: PropTypes.string,
   marginTop: PropTypes.number,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   type: PropTypes.string,
   size: PropTypes.number,
 };
