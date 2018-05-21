@@ -30,6 +30,7 @@ class SignIn extends Component {
 
   static propTypes = {
     signIn: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -173,7 +174,7 @@ class SignIn extends Component {
             <Button
               style={styles.buttonTitle}
               containerStyle={styles.buttonWrapper}
-              onPress={this.onSignInPress}
+              onPress={() => this.props.navigation.navigate('SignUp')}
             >
               Sign Up
             </Button>
@@ -188,7 +189,8 @@ class SignIn extends Component {
       <ViewWrapper
         withFade={false}
         withMove={false}
-        fromBackgroundStyle={styles.wrapperToBackground}>
+        fromBackgroundStyle={styles.wrapperToBackground}
+      >
         <StatusBar
           backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
         <ScrollView
