@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   RefreshControl,
+  Dimensions,
   StatusBar,
   Alert,
   View,
@@ -17,6 +18,9 @@ import ApprovalsRowFront from './ApprovalsRowFront';
 import ApprovalsRowBack from './ApprovalsRowBack';
 import UserService from '../../services/userService';
 import { theme } from '../../styles';
+
+const HEIGHT: number = Dimensions.get('window').height;
+const WIDTH: number = Dimensions.get('window').width;
 
 class Approvals extends Component {
   static navigationOptions = {
@@ -75,6 +79,15 @@ class Approvals extends Component {
     );
   }
 
+  renderPlaceholder() {
+    return (
+      <View pointerEvents={'box-none'} style={styles.placeholderContainer}>
+        <Icon name="md-sad" size={45} color={'grey'} />
+        <Text style={styles.placeholderText}>No pending approvals</Text>
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -101,6 +114,9 @@ class Approvals extends Component {
           rightOpenValue={-75}
         />
         <Toast ref={this.toastRef} />
+        {!this.state.isRefreshing
+          && this.state.pendingApprovals.length === 0
+          ? this.renderPlaceholder() : null}
       </View>
     );
   }
@@ -113,6 +129,20 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: 'white',
+  },
+  placeholderContainer: {
+    position: 'absolute',
+    width: WIDTH,
+    height: HEIGHT,
+    marginTop: -80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    marginTop: 15,
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 23,
   },
   welcome: {
     fontSize: 20,
