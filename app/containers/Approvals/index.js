@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import PropTypes from 'prop-types';
+import Toast from 'react-native-easy-toast';
 
 import ApprovalsRowFront from './ApprovalsRowFront';
 import ApprovalsRowBack from './ApprovalsRowBack';
@@ -33,9 +34,10 @@ class Approvals extends Component {
       pendingApprovals: [],
       isRefreshing: false,
     };
-
+    this.toastRef = React.createRef();
     this.fetchPendingRequests = this.fetchPendingRequests.bind(this);
     this.onUserApprove = this.onUserApprove.bind(this);
+    this.onUserApproveTapped = this.onUserApproveTapped.bind(this);
   }
 
   componentDidMount() {
@@ -55,10 +57,22 @@ class Approvals extends Component {
     rowMap[rowData.index].closeRow();
     try {
       await UserService.approveUser(rowData.item.user_name);
+      this.toastRef.current.show('User account approved');
       this.fetchPendingRequests();
     } catch (error) {
       Alert.alert('Error', 'An error occured while fetching pending approvals');
     }
+  }
+
+  onUserApproveTapped(rowData, rowMap) {
+    Alert.alert(
+      'Confirm Approval',
+      `User: ${rowData.item.user_name}\nEmail: ${rowData.item.email}`,
+      [
+        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+        { text: 'Approve', onPress: () => this.onUserApprove(rowData, rowMap) },
+      ],
+    );
   }
 
   render() {
@@ -81,11 +95,12 @@ class Approvals extends Component {
             <ApprovalsRowFront rowData={rowData} rowMap={rowMap} />
           )}
           renderHiddenItem={(rowData, rowMap) => (
-            <ApprovalsRowBack rowData={rowData} rowMap={rowMap} onPress={this.onUserApprove.bind(null, rowData, rowMap)} />
+            <ApprovalsRowBack rowData={rowData} rowMap={rowMap} onPress={this.onUserApproveTapped.bind(null, rowData, rowMap)} />
           )}
           disableRightSwipe={true}
           rightOpenValue={-75}
         />
+        <Toast ref={this.toastRef} />
       </View>
     );
   }
