@@ -3,6 +3,7 @@ import {
   View,
   Text,
   ScrollView,
+  Alert,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -33,7 +34,14 @@ class CustomDrawer extends Component {
   }
 
   signOut() {
-    this.props.signOut();
+    Alert.alert(
+      'Are you sure?',
+      'You are about to Sign-Out',
+      [
+        { text: 'No', onPress: () => { }, style: 'cancel' },
+        { text: 'Yes', onPress: () => this.props.signOut() },
+      ],
+    );
   }
 
   navigateTo(screen, tabIndex) {
@@ -69,7 +77,10 @@ class CustomDrawer extends Component {
               </View>
             </View>
             <View style={styles.bottomContainer}>
-              <Text style={styles.userText}>{this.props.user.currentUser.username}</Text>
+              <View style={styles.userInfoContainer}>
+                <Icon name="md-person" size={16} color={theme.PRIMARY_STATUS_BAR_COLOR} />
+                <Text style={styles.userText}>{this.props.user.currentUser.username}</Text>
+              </View>
               <TouchableOpacity onPress={this.signOut} style={styles.signOutButton}>
                 <Text style={styles.signOutText}>Sign Out</Text>
                 <Icon name="md-log-out" size={12} color={theme.PRIMARY_STATUS_BAR_COLOR} />
@@ -109,13 +120,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  userInfoContainer: {
+    flexDirection: 'row',
+    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
   selectedItem: {
     backgroundColor: 'rgba(230, 230, 230, 1)',
     padding: 0,
   },
   userText: {
     fontSize: 16,
-    marginLeft: 15,
+    marginLeft: 7,
     color: theme.PRIMARY_STATUS_BAR_COLOR,
     fontWeight: '500',
   },
