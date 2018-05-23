@@ -33,10 +33,10 @@ export const openDrawer = () => {
   };
 };
 
-export const setDrawerTab = (tabName) => {
+export const setDrawerTab = (tabIndex) => {
   return {
     type: appActions.SET_DRAWER_TAB,
-    payload: tabName,
+    payload: tabIndex,
   };
 };
 

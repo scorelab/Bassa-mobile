@@ -16,20 +16,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-native-button';
 
-import { signIn } from '../../actions/userActions';
+import { signUp } from '../../actions/userActions';
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 const HEIGHT: number = Dimensions.get('window').height;
 
-class SignIn extends Component {
+class SignUp extends Component {
   static navigationOptions = {
     header: null,
   };
 
   static propTypes = {
-    signIn: PropTypes.func.isRequired,
+    signUp: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
   };
 
@@ -44,25 +44,36 @@ class SignIn extends Component {
       movingContainer: 'right',
       username: '',
       password: '',
+      email: '',
+      confirmPassword: '',
       usernameError: '',
       passwordError: '',
+      emailError: '',
+      confirmPasswordError: '',
       isLoading: false,
     };
 
     this.passwordInputRef = React.createRef();
-    this.onSignInPress = this.onSignInPress.bind(this);
+    this.confirmPasswordInputRef = React.createRef();
+    this.emaiInputRef = React.createRef();
+    this.onSignUpPress = this.onSignUpPress.bind(this);
   }
 
   componentDidMount() {
     setTimeout(() => this.startComponentAnimation(), 1000);
   }
 
-  onSignInPress() {
+  onSignUpPress() {
     if (this.isValid()) {
       this.setState({ isLoading: true });
-      this.startSignInAnimation();
-      this.props.signIn(this.state.username, this.state.password);
+      this.startSignUpAnimation();
+      this.props.signUp(this.state.username, this.state.email, this.state.password, this.state.confirmPassword);
     }
+  }
+
+  validateEmail(email) {
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(email);
   }
 
   isValid() {
@@ -70,8 +81,28 @@ class SignIn extends Component {
       this.setState({ usernameError: 'Username is required' });
       return false;
     }
+    if (this.state.email === '') {
+      this.setState({ emailError: 'Email is required' });
+      return false;
+    }
+    if (this.state.email !== '' && !this.validateEmail(this.state.email)) {
+      this.setState({ emailError: 'Email is not valid' });
+      return false;
+    }
     if (this.state.password === '') {
       this.setState({ passwordError: 'Password is required' });
+      return false;
+    }
+    if (this.state.password !== '' && this.state.password.length < 8) {
+      this.setState({ passwordError: 'Password must have at least 8 characters' });
+      return false;
+    }
+    if (this.state.confirmPassword === '') {
+      this.setState({ confirmPasswordError: 'Confirm Password is required' });
+      return false;
+    }
+    if (this.state.confirmPassword !== '' && this.state.confirmPassword !== this.state.password) {
+      this.setState({ confirmPasswordError: 'Confirm Password does not match' });
       return false;
     }
     return true;
@@ -101,7 +132,7 @@ class SignIn extends Component {
     ]).start();
   }
 
-  startSignInAnimation(reverse = false) {
+  startSignUpAnimation(reverse = false) {
     Animated.timing(
       this.state.fadeAnimation,
       {
@@ -112,7 +143,7 @@ class SignIn extends Component {
     ).start();
   }
 
-  renderSignInContainer() {
+  renderSignUpContainer() {
     return (
       <Animated.View
         pointerEvents={this.state.isLoading ? 'none' : 'auto'}
@@ -130,7 +161,7 @@ class SignIn extends Component {
         }]}
       >
         <View
-          style={styles.signInContainer}>
+          style={styles.signUpContainer}>
           <TextField
             label={'Username'}
             error={this.state.usernameError}
@@ -142,6 +173,22 @@ class SignIn extends Component {
             onChangeText={text => this.setState({ usernameError: null, username: text })}
             returnKeyType={'next'}
             value={this.state.username}
+            onSubmitEditing={() => {
+              this.emaiInputRef.current.focus();
+            }}
+          />
+          <TextField
+            label={'Email'}
+            ref={this.emaiInputRef}
+            error={this.state.emailError}
+            tintColor={'#FFF'}
+            textColor={'#FFF'}
+            baseColor={'#FFF'}
+            labelTextStyle={{ fontWeight: '500' }}
+            autoCapitalize={'none'}
+            onChangeText={text => this.setState({ emailError: null, email: text })}
+            returnKeyType={'next'}
+            value={this.state.email}
             onSubmitEditing={() => {
               this.passwordInputRef.current.focus();
             }}
@@ -160,24 +207,44 @@ class SignIn extends Component {
             returnKeyType={'next'}
             value={this.state.password}
             onSubmitEditing={() => {
-              this.onSignInPress();
+              this.confirmPasswordInputRef.current.focus();
             }}
           />
-          <View style={styles.buttonContainer}>
+          <TextField
+            ref={this.confirmPasswordInputRef}
+            label={'Confirm Password'}
+            tintColor={'#FFF'}
+            error={this.state.confirmPasswordError}
+            textColor={'#FFF'}
+            baseColor={'#FFF'}
+            labelTextStyle={{ fontWeight: '500' }}
+            autoCapitalize={'none'}
+            secureTextEntry={true}
+            onChangeText={text => this.setState({ confirmPasswordError: null, confirmPassword: text })}
+            returnKeyType={'next'}
+            value={this.state.confirmPassword}
+            onSubmitEditing={() => {
+              this.onSignUpPress();
+            }}
+          />
+          <View
+            style={styles.buttonContainer}>
             <Button
               style={styles.buttonTitle}
               containerStyle={styles.buttonWrapper}
-              onPress={this.onSignInPress}
-            >
-              Sign In
-            </Button>
-            <Button
-              style={styles.buttonTitle}
-              containerStyle={styles.buttonWrapper}
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={this.onSignUpPress}
             >
               Sign Up
             </Button>
+            <Button
+              style={styles.buttonTitle}
+              containerStyle={styles.buttonWrapper}
+              onPress={() => this.props.navigation.goBack()}
+            >
+              Back to Sign In
+            </Button>
+            <View
+              style={styles.spacer} />
           </View>
         </View>
       </Animated.View>
@@ -189,8 +256,7 @@ class SignIn extends Component {
       <ViewWrapper
         withFade={false}
         withMove={false}
-        fromBackgroundStyle={styles.wrapperToBackground}
-      >
+        fromBackgroundStyle={styles.wrapperToBackground}>
         <StatusBar
           backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
         <ScrollView
@@ -214,10 +280,12 @@ class SignIn extends Component {
               <Image
                 source={require('../../images/bassa.png')} />
             </Animated.View>
-            {this.renderSignInContainer()}
+            {this.renderSignUpContainer()}
+
           </View>
           <LoadingIndicator
             isVisible={this.state.isLoading} />
+
         </ScrollView>
       </ViewWrapper>
     );
@@ -230,10 +298,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: (username, password) => dispatch(signIn(username, password)),
+  signUp: (username, email, password, confirmPassword) => dispatch(signUp(username, email, password, confirmPassword)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
 
 const styles = StyleSheet.create({
   wrapperToBackground: {
@@ -241,6 +309,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 30,
+  },
+  spacer: {
+    height: 100,
+    backgroundColor: 'transparent',
   },
   container: {
     flex: 1,
@@ -272,19 +344,14 @@ const styles = StyleSheet.create({
     height: HEIGHT,
     paddingHorizontal: 35,
   },
-  signInContainer: {
+  signUpContainer: {
     marginTop: HEIGHT * 0.33,
+    paddingBottom: 70,
   },
-  signInText: {
+  signUpText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
     fontWeight: '300',
-  },
-  signInLink: {
-    color: theme.TEXT_COLOR_INVERT,
-    fontSize: 14,
-    fontWeight: '400',
-    textDecorationLine: 'underline',
   },
   mainContainer: {
     flex: 1,

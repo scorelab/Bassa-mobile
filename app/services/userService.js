@@ -1,18 +1,17 @@
 import APIBuilder from '../helpers/APIBuilder';
+import { prepareRequestBody } from '../helpers/utils';
 
-const signIn = (username, password) => {
-  const credentials = {
-    user_name: username,
-    password,
-  };
-  let formBody = [];
+const signIn = credentials => APIBuilder.API.post('/api/login', prepareRequestBody(credentials));
 
-  Object.keys(credentials).forEach(key => formBody.push(`${encodeURIComponent(key)}=${encodeURIComponent(credentials[key])}`));
-  formBody = formBody.join('&');
+const signUp = userData => APIBuilder.API.post('/api/regularuser', JSON.stringify(userData));
 
-  return APIBuilder.API.post('/api/login', formBody);
-};
+const approveUser = username => APIBuilder.API.post(`/api/user/approve/${username}`);
+
+const getPendingRequests = () => APIBuilder.API.get('/api/user/requests');
 
 export default {
   signIn,
+  signUp,
+  approveUser,
+  getPendingRequests,
 };
