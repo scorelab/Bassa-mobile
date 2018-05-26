@@ -144,9 +144,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 23,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
 });

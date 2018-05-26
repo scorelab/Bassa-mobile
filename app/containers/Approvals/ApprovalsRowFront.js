@@ -4,10 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
 } from 'react-native';
-
-import { theme } from '../../styles';
 
 const ApprovalsRowFront = ({ rowData, rowMap, }) => {
   return (
