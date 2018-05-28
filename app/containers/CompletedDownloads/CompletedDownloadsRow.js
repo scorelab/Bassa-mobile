@@ -16,10 +16,10 @@ const CompletedDownloadsRow = ({ item }) => {
     <View style={styles.rowFront}>
       <View style={styles.rowContainer}>
         <View style={styles.innerRowContainer}>
-          <Text style={styles.usernameText}>{item.download_name.length > 30 ? `${item.download_name.substring(0, 25)}...` : item.download_name}</Text>
+          <Text style={styles.downloadText}>{item.download_name.length > 30 ? `${item.download_name.substring(0, 25)}...` : item.download_name}</Text>
           <Text style={styles.timesAgoText}><TimeAgo time={moment.unix(item.completed_time)} /></Text>
         </View>
-        <Text style={styles.emailText}>By {item.user_name}</Text>
+        <Text style={styles.usernameText}>By {item.user_name}</Text>
         <Text style={styles.sizeText}>{formatBytes(Number(item.size))}</Text>
       </View>
     </View>
@@ -50,11 +50,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  usernameText: {
+  downloadText: {
     fontSize: 17,
     fontWeight: '500',
   },
-  emailText: {
+  usernameText: {
     fontSize: 15,
   },
   sizeText: {

@@ -40,9 +40,10 @@ class CompletedDownloads extends Component {
   }
 
   async fetchDownloads() {
+    this.setState({ isRefreshing: true });
     try {
       const response = await DownloadService.getAllDownloads();
-      this.setState({ downloadsList: response.data });
+      this.setState({ downloadsList: response.data, isRefreshing: false });
     } catch (error) {
       Alert.alert('Error', 'An error occured while fetching completed downloads');
     }
@@ -56,7 +57,7 @@ class CompletedDownloads extends Component {
         <FlatList
           data={this.state.downloadsList}
           refreshing={this.state.isRefreshing}
-          onRefresh={() => { }}
+          onRefresh={this.fetchDownloads}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => <CompletedDownloadsRow item={item} />}
         />
