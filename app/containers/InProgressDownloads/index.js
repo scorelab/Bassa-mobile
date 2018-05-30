@@ -8,13 +8,12 @@ import {
   View,
 } from 'react-native';
 
-import io from 'socket.io-client/dist/socket.io';
+import io from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
-
 
 import InProgressDownloadsRowFront from './InProgressDownloadsRowFront';
 import DownloadService from '../../services/downloadService';
@@ -39,10 +38,7 @@ class InProgressDownloads extends Component {
       isRefreshing: false,
       activeDownloads: [],
     };
-    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {
-      jsonp: false,
-      transports: ['websocket'],
-    });
+    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`);
 
     this.socket.on('connect', () => {
       this.socket.emit('join', { room: this.props.user.currentUser.username });
@@ -82,10 +78,12 @@ class InProgressDownloads extends Component {
     this.setState({ isRefreshing: true });
     try {
       const response = await DownloadService.getDownloadsForUser();
-      const activeDownloads = response.data.map(download => ({
-        ...download,
-        progress: 0,
-      }));
+      const activeDownloads = response.data
+        .filter(download => download.status === 0)
+        .map(download => ({
+          ...download,
+          progress: 0,
+        }));
       this.setState({ activeDownloads, isRefreshing: false });
     } catch (error) {
       Alert.alert('Error', 'An error occured while fetching active downloads');
