@@ -5,6 +5,8 @@ import {
   Alert,
   StatusBar,
   FlatList,
+  Text,
+  Dimensions,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,6 +15,9 @@ import PropTypes from 'prop-types';
 import CompletedDownloadsRow from './CompletedDownloadsRow';
 import DownloadService from '../../services/downloadService';
 import { theme } from '../../styles';
+
+const HEIGHT: number = Dimensions.get('window').height;
+const WIDTH: number = Dimensions.get('window').width;
 
 class CompletedDownloads extends Component {
   static navigationOptions = {
@@ -39,6 +44,15 @@ class CompletedDownloads extends Component {
     this.fetchDownloads();
   }
 
+  renderPlaceholder() {
+    return (
+      <View pointerEvents={'box-none'} style={styles.placeholderContainer}>
+        <Icon name="md-sad" size={45} color={'grey'} />
+        <Text style={styles.placeholderText}>No completed downloads</Text>
+      </View>
+    );
+  }
+
   async fetchDownloads() {
     this.setState({ isRefreshing: true });
     try {
@@ -61,6 +75,9 @@ class CompletedDownloads extends Component {
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => <CompletedDownloadsRow item={item} />}
         />
+        {!this.state.isRefreshing
+          && this.state.downloadsList.length === 0
+          ? this.renderPlaceholder() : null}
       </View>
     );
   }
@@ -73,5 +90,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: 'white',
+  },
+  placeholderContainer: {
+    position: 'absolute',
+    width: WIDTH,
+    height: HEIGHT,
+    marginTop: -80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    marginTop: 15,
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 23,
   },
 });

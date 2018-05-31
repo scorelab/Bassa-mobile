@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   RefreshControl,
+  Text,
+  Dimensions,
   Alert,
   StatusBar,
   View,
@@ -20,6 +22,9 @@ import DownloadService from '../../services/downloadService';
 import { theme } from '../../styles';
 import APIConstants from '../../constants/API';
 import InProgressDownloadsRowBack from './InProgressDownloadsRowBack';
+
+const HEIGHT: number = Dimensions.get('window').height;
+const WIDTH: number = Dimensions.get('window').width;
 
 class InProgressDownloads extends Component {
   static navigationOptions = {
@@ -60,6 +65,15 @@ class InProgressDownloads extends Component {
       this.socket.disconnect();
       this.socket = null;
     }
+  }
+
+  renderPlaceholder() {
+    return (
+      <View pointerEvents={'box-none'} style={styles.placeholderContainer}>
+        <Icon name="md-sad" size={45} color={'grey'} />
+        <Text style={styles.placeholderText}>No active downloads</Text>
+      </View>
+    );
   }
 
   setupSocketConnection() {
@@ -138,6 +152,9 @@ class InProgressDownloads extends Component {
           rightOpenValue={-55}
         />
         <Toast ref={this.toastRef} />
+        {!this.state.isRefreshing
+          && this.state.activeDownloads.length === 0
+          ? this.renderPlaceholder() : null}
       </View>
     );
   }
@@ -154,5 +171,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: 'white',
+  },
+  placeholderContainer: {
+    position: 'absolute',
+    width: WIDTH,
+    height: HEIGHT,
+    marginTop: -80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    marginTop: 15,
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 23,
   },
 });
