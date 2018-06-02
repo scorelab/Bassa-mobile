@@ -16,6 +16,8 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
+import ActionButton from 'react-native-action-button';
+import Prompt from 'rn-prompt';
 
 import InProgressDownloadsRowFront from './InProgressDownloadsRowFront';
 import DownloadService from '../../services/downloadService';
@@ -41,6 +43,7 @@ class InProgressDownloads extends Component {
     super(props);
     this.state = {
       isRefreshing: false,
+      isPromptVisible: false,
       activeDownloads: [],
     };
     this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`);
@@ -53,6 +56,7 @@ class InProgressDownloads extends Component {
     this.onDownloadRemove = this.onDownloadRemove.bind(this);
     this.onDownloadRemoveTapped = this.onDownloadRemoveTapped.bind(this);
     this.setupSocketConnection = this.setupSocketConnection.bind(this);
+    this.onDownloadSubmit = this.onDownloadSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -126,6 +130,19 @@ class InProgressDownloads extends Component {
     );
   }
 
+  async onDownloadSubmit(link) {
+    this.setState({
+      isPromptVisible: false,
+    });
+    try {
+      await DownloadService.addDownload({ link });
+      this.toastRef.current.show('New download added');
+      this.fetchActiveDownloads();
+    } catch (error) {
+      Alert.alert('Error', 'An error occured while adding the download');
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -152,6 +169,21 @@ class InProgressDownloads extends Component {
           rightOpenValue={-55}
         />
         <Toast ref={this.toastRef} />
+        <Prompt
+          title={'Add New Download'}
+          placeholder={'Entr The URL'}
+          submitText={'Add'}
+          visible={this.state.isPromptVisible}
+          onCancel={() => this.setState({
+            isPromptVisible: false,
+          })}
+          onSubmit={value => this.onDownloadSubmit(value)} />
+        <ActionButton
+          buttonColor={theme.PRIMARY_COLOR}
+          onPress={() => this.setState({
+            isPromptVisible: true,
+          })}
+        />
         {!this.state.isRefreshing
           && this.state.activeDownloads.length === 0
           ? this.renderPlaceholder() : null}
