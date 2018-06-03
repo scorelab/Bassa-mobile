@@ -1,3 +1,5 @@
+import { REHYDRATE } from 'redux-persist';
+
 import { userActions, appActions } from '../actions/types';
 
 const initialState = {
@@ -7,6 +9,8 @@ const initialState = {
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case REHYDRATE:
+      return { ...state, selectedDrawer: initialState.selectedDrawer };
     case userActions.AUTHENTICATE_USER_SUCCESS:
       return { ...state, isSignedIn: true };
     case userActions.USER_SIGN_OUT:
