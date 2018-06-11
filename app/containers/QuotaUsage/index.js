@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
-  Text,
   StatusBar,
   View,
 } from 'react-native';
