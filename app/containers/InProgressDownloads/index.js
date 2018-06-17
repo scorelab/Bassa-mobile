@@ -46,22 +46,31 @@ class InProgressDownloads extends Component {
       isPromptVisible: false,
       activeDownloads: [],
     };
-    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`);
+    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {
+      transports: ['websocket'],
+    });
 
     this.socket.on('connect', () => {
       this.socket.emit('join', { room: this.props.user.currentUser.username });
+    });
+    this.socket.on('status', (data) => {
+      const { activeDownloads } = this.state;
+      activeDownloads.forEach((download, index) => {
+        if (download.id === data.id) {
+          activeDownloads[index].progress = data.progress;
+        }
+      });
+      this.setState({ activeDownloads });
     });
     this.toastRef = React.createRef();
     this.fetchActiveDownloads = this.fetchActiveDownloads.bind(this);
     this.onDownloadRemove = this.onDownloadRemove.bind(this);
     this.onDownloadRemoveTapped = this.onDownloadRemoveTapped.bind(this);
-    this.setupSocketConnection = this.setupSocketConnection.bind(this);
     this.onDownloadSubmit = this.onDownloadSubmit.bind(this);
   }
 
   componentDidMount() {
     this.fetchActiveDownloads();
-    this.setupSocketConnection();
   }
 
   componentWillUnmount() {
@@ -80,17 +89,6 @@ class InProgressDownloads extends Component {
     );
   }
 
-  setupSocketConnection() {
-    this.socket.on('status', (data) => {
-      const { activeDownloads } = this.state;
-      activeDownloads.forEach((download, index) => {
-        if (download.id === data.id) {
-          activeDownloads[index].progress = data.progress;
-        }
-      });
-      this.setState({ activeDownloads });
-    });
-  }
 
   async fetchActiveDownloads() {
     this.setState({ isRefreshing: true });
