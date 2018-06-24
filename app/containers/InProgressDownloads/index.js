@@ -18,10 +18,12 @@ import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import Prompt from 'rn-prompt';
+import _ from 'lodash';
 
 import InProgressDownloadsRowFront from './InProgressDownloadsRowFront';
 import DownloadService from '../../services/downloadService';
 import { theme } from '../../styles';
+import { showPushNotification } from '../../helpers/utils';
 import APIConstants from '../../constants/API';
 import InProgressDownloadsRowBack from './InProgressDownloadsRowBack';
 
@@ -47,17 +49,28 @@ class InProgressDownloads extends Component {
       activeDownloads: [],
     };
     this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {
-      transports: ['websocket'],
+      // transports: ['websocket'],
     });
 
     this.socket.on('connect', () => {
+      console.log('connected')
       this.socket.emit('join', { room: this.props.user.currentUser.username });
     });
     this.socket.on('status', (data) => {
+      console.log('data: ', data)
       const { activeDownloads } = this.state;
       activeDownloads.forEach((download, index) => {
         if (download.id === data.id) {
-          activeDownloads[index].progress = data.progress;
+          if (Number(data.progress) === 100) {
+            showPushNotification(
+              'Download Complete',
+              activeDownloads[index].download_name,
+              `${activeDownloads[index].download_name} has been successfully downloaded`,
+            );
+            _.pullAt(activeDownloads, [index]);
+          } else {
+            activeDownloads[index].progress = data.progress;
+          }
         }
       });
       this.setState({ activeDownloads });
@@ -171,10 +184,13 @@ class InProgressDownloads extends Component {
           }
           data={this.state.activeDownloads}
           renderItem={(rowData, rowMap) => (
-            <InProgressDownloadsRowFront rowData={rowData} rowMap={rowMap} />
+            <InProgressDownloadsRowFront
+              rowData={rowData}
+              rowMap={rowMap} />
           )}
           renderHiddenItem={(rowData, rowMap) => (
-            <InProgressDownloadsRowBack onPress={this.onDownloadRemoveTapped.bind(null, rowData, rowMap)} />
+            <InProgressDownloadsRowBack
+              onPress={this.onDownloadRemoveTapped.bind(null, rowData, rowMap)} />
           )}
           disableRightSwipe={true}
           rightOpenValue={-55}
