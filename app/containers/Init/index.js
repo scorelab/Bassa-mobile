@@ -4,11 +4,13 @@ import {
   StyleSheet,
   View,
   Dimensions,
+  PushNotificationIOS,
   StatusBar,
   Animated,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import PushNotification from 'react-native-push-notification';
 
 import { resetToSignIn } from '../../actions/appActions';
 import ViewWrapper from '../../components/ViewWrapper';
@@ -34,6 +36,18 @@ class Init extends Component {
   }
 
   componentDidMount() {
+    PushNotification.configure({
+      onNotification: (notification) => {
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+      popInitialNotification: false,
+      requestPermissions: true,
+    });
     setTimeout(() => this.navigateToNextView(), 1000);
   }
 
