@@ -4,15 +4,13 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  PushNotificationIOS,
   StatusBar,
   Animated,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import PushNotification from 'react-native-push-notification';
 
-import { resetToSignIn } from '../../actions/appActions';
+import { resetToSignIn, configurePushNotifications } from '../../actions/appActions';
 import ViewWrapper from '../../components/ViewWrapper';
 import { theme } from '../../styles';
 
@@ -25,6 +23,7 @@ class Init extends Component {
 
   static propTypes = {
     resetToSignIn: PropTypes.func.isRequired,
+    configurePushNotifications: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -36,18 +35,7 @@ class Init extends Component {
   }
 
   componentDidMount() {
-    PushNotification.configure({
-      onNotification: (notification) => {
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-      popInitialNotification: false,
-      requestPermissions: true,
-    });
+    this.props.configurePushNotifications();
     setTimeout(() => this.navigateToNextView(), 1000);
   }
 
@@ -117,6 +105,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   resetToSignIn: () => dispatch(resetToSignIn()),
+  configurePushNotifications: () => dispatch(configurePushNotifications()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Init);
