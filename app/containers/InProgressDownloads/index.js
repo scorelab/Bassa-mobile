@@ -48,16 +48,12 @@ class InProgressDownloads extends Component {
       isPromptVisible: false,
       activeDownloads: [],
     };
-    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {
-      // transports: ['websocket'],
-    });
+    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {});
 
     this.socket.on('connect', () => {
-      console.log('connected')
       this.socket.emit('join', { room: this.props.user.currentUser.username });
     });
     this.socket.on('status', (data) => {
-      console.log('data: ', data)
       const { activeDownloads } = this.state;
       activeDownloads.forEach((download, index) => {
         if (download.id === data.id) {
