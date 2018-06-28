@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "prop-types": "^15.6.1",
     "react": "16.3.1",
@@ -18,6 +19,7 @@
     "react-native-easy-toast": "^1.1.0",
     "react-native-material-textfield": "^0.12.0",
     "react-native-progress-circle": "^2.0.0",
+    "react-native-push-notification": "^3.0.2",
     "react-native-spinkit": "^1.1.1",
     "react-native-svg": "^6.3.1",
     "react-native-svg-charts": "^5.1.1",

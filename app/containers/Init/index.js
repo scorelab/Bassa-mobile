@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { resetToSignIn } from '../../actions/appActions';
+import { resetToSignIn, configurePushNotifications } from '../../actions/appActions';
 import ViewWrapper from '../../components/ViewWrapper';
 import { theme } from '../../styles';
 
@@ -23,6 +23,7 @@ class Init extends Component {
 
   static propTypes = {
     resetToSignIn: PropTypes.func.isRequired,
+    configurePushNotifications: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -34,6 +35,7 @@ class Init extends Component {
   }
 
   componentDidMount() {
+    this.props.configurePushNotifications();
     setTimeout(() => this.navigateToNextView(), 1000);
   }
 
@@ -103,6 +105,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   resetToSignIn: () => dispatch(resetToSignIn()),
+  configurePushNotifications: () => dispatch(configurePushNotifications()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Init);

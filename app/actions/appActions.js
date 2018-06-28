@@ -33,6 +33,24 @@ export const openDrawer = () => {
   };
 };
 
+export const configurePushNotifications = () => {
+  return {
+    type: appActions.CONFIGURE_PUSH_NOTIFICATIONS,
+  };
+};
+
+export const connectToSocketIoServer = () => {
+  return {
+    type: appActions.CONNECT_TO_SOCKET_IO_SERVER,
+  };
+};
+
+export const disconnectFromSocketIoServer = () => {
+  return {
+    type: appActions.DISCONNECT_FROM_SOCKET_IO_SERVER,
+  };
+};
+
 export const setDrawerTab = (tabIndex) => {
   return {
     type: appActions.SET_DRAWER_TAB,

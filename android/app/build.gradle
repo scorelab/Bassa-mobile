@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-push-notification')
     compile project(':react-native-svg')
     compile project(':react-native-spinkit')
     compile fileTree(dir: "libs", include: ["*.jar"])
