@@ -12,7 +12,10 @@ export const prepareRequestBody = (requestParams = {}) => {
 };
 
 export const formatBytes = (bytes) => {
-  if (bytes === 0) {
+  if (bytes === undefined) {
+    return null;
+  }
+  if (Number(bytes) === 0) {
     return '0 Bytes';
   }
   const k = 1000;
