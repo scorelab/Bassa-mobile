@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "eslint app/**",
-    "test": "jest --watch"
+    "test": "jest --watch --coverage"
   },
   "dependencies": {
     "axios": "^0.18.0",
