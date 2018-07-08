@@ -4,7 +4,7 @@ A cross-platform mobile client for [Bassa](https://github.com/scorelab/Bassa)
 ![Bassa Platform](https://user-images.githubusercontent.com/15249242/40108561-e8abc11c-5918-11e8-92b9-f59f64b2478c.png)
 
 ## Screenshots
-![Splash Screen](https://user-images.githubusercontent.com/15249242/42418754-75f2e7c4-82c4-11e8-9d30-6df2d9bb21a3.png)
+![Splash Screen](https://user-images.githubusercontent.com/15249242/42421797-1ff2632e-82f9-11e8-8338-7d603d965a85.png)
 
 ## Get Started
  - Clone this repository with either ```git clone --recurse-submodules https://github.com/scorelab/Bassa-mobile.git``` or ```git clone --recurse-submodules git@github.com:scorelab/Bassa-mobile.git```, if you are using SSH.
