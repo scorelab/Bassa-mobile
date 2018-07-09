@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingIndicator component LoadingIndicator component renders correctly 1`] = `
+<View
+  pointerEvents="none"
+  style={
+    Array [
+      Object {
+        "alignSelf": "center",
+        "position": "absolute",
+      },
+      Object {
+        "top": 657,
+      },
+    ]
+  }
+>
+  <View />
+</View>
+`;

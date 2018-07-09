@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "eslint app/**",
-    "test": "jest"
+    "test": "jest --watch --coverage"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -50,6 +50,8 @@
     "react-test-renderer": "16.3.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "verbose": true,
+    "testMatch": [ "__tests__/**/*.js?(x)", "**/?(*.)+(test).js?(x)" ]
   }
 }

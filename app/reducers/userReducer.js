@@ -20,7 +20,7 @@ function userReducer(state = initialState, action) {
           ...state.currentUser,
           username: action.payload.username,
           isAdmin: action.payload.isAdmin,
-          timestamp: Date.now(),
+          timestamp: action.payload.timestamp ? action.payload.timestamp : Date.now(),
         },
       };
     default:
