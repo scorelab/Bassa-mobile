@@ -12,9 +12,10 @@ import { connect } from 'react-redux';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
+import * as KeychainService from 'react-native-keychain';
 
 import { theme } from '../styles';
-import { resetToSignIn, closeDrawer, setDrawerTab } from '../actions/appActions';
+import { resetToSignIn, closeDrawer, setDrawerTab, handleKeychainErrors } from '../actions/appActions';
 import { signOut } from '../actions/userActions';
 
 class CustomDrawer extends Component {
@@ -33,15 +34,20 @@ class CustomDrawer extends Component {
     this.navigateTo = this.navigateTo.bind(this);
   }
 
-  signOut() {
-    Alert.alert(
-      'Are you sure?',
-      'You are about to Sign-Out',
-      [
-        { text: 'No', onPress: () => { }, style: 'cancel' },
-        { text: 'Yes', onPress: () => this.props.signOut() },
-      ],
-    );
+  async signOut() {
+    try {
+      await KeychainService.resetGenericPassword();
+      Alert.alert(
+        'Are you sure?',
+        'You are about to Sign-Out',
+        [
+          { text: 'No', onPress: () => { }, style: 'cancel' },
+          { text: 'Yes', onPress: () => this.props.signOut() },
+        ],
+      );
+    } catch(error) {
+      this.props.handleKeychainErrors(error);
+    }
   }
 
   navigateTo(screen, tabIndex) {
@@ -101,6 +107,7 @@ const mapDispatchToProps = dispatch => ({
   },
   closeDrawer: () => dispatch(closeDrawer()),
   setDrawerTab: tabIndex => dispatch(setDrawerTab(tabIndex)),
+  handleKeychainErrors: error => dispatch(handleKeychainErrors(error)),
 });
 
 const mapStateToProps = state => ({
