@@ -17,6 +17,7 @@
     "react-native-action-button": "^2.8.4",
     "react-native-button": "^2.3.0",
     "react-native-easy-toast": "^1.1.0",
+    "react-native-keychain": "^3.0.0-rc.3",
     "react-native-material-textfield": "^0.12.0",
     "react-native-progress-circle": "^2.0.0",
     "react-native-push-notification": "^3.0.2",
@@ -52,6 +53,9 @@
   "jest": {
     "preset": "react-native",
     "verbose": true,
-    "testMatch": [ "__tests__/**/*.js?(x)", "**/?(*.)+(test).js?(x)" ]
+    "testMatch": [
+      "__tests__/**/*.js?(x)",
+      "**/?(*.)+(test).js?(x)"
+    ]
   }
 }
