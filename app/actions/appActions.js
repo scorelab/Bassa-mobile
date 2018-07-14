@@ -58,3 +58,10 @@ export const setDrawerTab = (tabIndex) => {
   };
 };
 
+export const handleKeychainErrors = (error) => {
+  return {
+    type: appActions.HANDLE_KEYCHAIN_ERRORS,
+    payload: error,
+  };
+};
+
