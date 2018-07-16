@@ -1,5 +1,6 @@
 import { put, call, takeEvery, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
+import * as KeychainService from 'react-native-keychain';
 
 import UserService from '../services/userService';
 import { userActions } from '../actions/types';
@@ -11,6 +12,7 @@ function* signInUser({ payload }) {
   try {
     const response = yield call(UserService.signIn, payload);
     if (response.status === 200) {
+      yield call(KeychainService.setGenericPassword, payload.user_name, payload.password);
       yield put(handleAuthSuccess({
         username: payload.user_name,
         isAdmin: Number(response.data.auth) === 0 ? true : false,

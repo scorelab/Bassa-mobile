@@ -5,6 +5,7 @@ export const appActions = {
   DISCONNECT_FROM_SOCKET_IO_SERVER: 'DISCONNECT_FROM_SOCKET_IO_SERVER',
   OPEN_DRAWER: 'Navigation/OPEN_DRAWER',
   CLOSE_DRAWER: 'Navigation/CLOSE_DRAWER',
+  HANDLE_KEYCHAIN_ERRORS: 'HANDLE_KEYCHAIN_ERRORS',
 };
 
 export const userActions = {

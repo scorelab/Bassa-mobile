@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { resetToSignIn, configurePushNotifications } from '../../actions/appActions';
+import { resetToSignIn, configurePushNotifications, resetToMainDrawer } from '../../actions/appActions';
 import ViewWrapper from '../../components/ViewWrapper';
 import { theme } from '../../styles';
 
@@ -40,7 +40,11 @@ class Init extends Component {
   }
 
   navigateToNextView() {
-    this.props.resetToSignIn();
+    if (this.props.app.isSignedIn && this.props.app.isSignedIn === true) {
+      this.props.resetToMainDrawer();
+    } else {
+      this.props.resetToSignIn();
+    }
   }
 
   startAnimation() {
@@ -105,6 +109,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   resetToSignIn: () => dispatch(resetToSignIn()),
+  resetToMainDrawer: () => dispatch(resetToMainDrawer()),
   configurePushNotifications: () => dispatch(configurePushNotifications()),
 });
 
