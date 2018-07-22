@@ -47,7 +47,7 @@ class QuotaUsage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.downloads.lastDownloadTimestamp !== prevProps.lastDownloadTimestamp) {
+    if (prevProps.downloads.lastDownloadTimestamp !== this.props.downloads.lastDownloadTimestamp) {
       this.fetchQuotaUsages();
     }
   }
