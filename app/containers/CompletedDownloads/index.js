@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import CompletedDownloadsRow from './CompletedDownloadsRow';
 import DownloadService from '../../services/downloadService';
@@ -42,6 +43,12 @@ class CompletedDownloads extends Component {
 
   componentDidMount() {
     this.fetchDownloads();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.downloads.lastDownloadTimestamp !== prevProps.lastDownloadTimestamp) {
+      this.fetchDownloads();
+    }
   }
 
   renderPlaceholder() {
@@ -83,7 +90,11 @@ class CompletedDownloads extends Component {
   }
 }
 
-export default CompletedDownloads;
+const mapStateToProps = state => ({
+  downloads: state.downloads,
+});
+
+export default connect(mapStateToProps)(CompletedDownloads);
 
 const styles = StyleSheet.create({
   container: {
