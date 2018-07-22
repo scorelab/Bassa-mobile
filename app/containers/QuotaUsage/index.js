@@ -12,6 +12,7 @@ import ActionButton from 'react-native-action-button';
 import PropTypes from 'prop-types';
 import { PieChart } from 'react-native-svg-charts';
 import Toast from 'react-native-easy-toast';
+import { connect } from 'react-redux';
 
 import { theme } from '../../styles';
 import { formatBytes } from '../../helpers/utils';
@@ -43,6 +44,12 @@ class QuotaUsage extends Component {
 
   componentDidMount() {
     this.fetchQuotaUsages();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.downloads.lastDownloadTimestamp !== prevProps.lastDownloadTimestamp) {
+      this.fetchQuotaUsages();
+    }
   }
 
   async fetchQuotaUsages() {
@@ -152,7 +159,11 @@ class QuotaUsage extends Component {
   }
 }
 
-export default QuotaUsage;
+const mapStateToProps = state => ({
+  downloads: state.downloads,
+});
+
+export default connect(mapStateToProps)(QuotaUsage);
 
 const styles = StyleSheet.create({
   container: {
