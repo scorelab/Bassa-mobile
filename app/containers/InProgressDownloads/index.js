@@ -54,11 +54,9 @@ class InProgressDownloads extends Component {
     });
 
     this.socket.on('connect', () => {
-      console.log("connected")
       this.socket.emit('join', { room: this.props.user.currentUser.username });
     });
     this.socket.on('status', (data) => {
-      console.log("data: ", data)
       const { activeDownloads } = this.state;
       activeDownloads.forEach((download, index) => {
         if (download.id === data.id) {
