@@ -18,3 +18,6 @@ A cross-platform mobile client for [Bassa](https://github.com/scorelab/Bassa)
 
 ## Lint
  - run ```yarn run lint``` or ```npm run lint```.
+
+ ## Known Issues
+ - Socket.io connection between the Bassa-mobile app and Bassa-backend can have issues sometimes. Hence, functionalities that depend on the Socket.io connection such as Push Notifications, Download Progress Circle, Redux Refresh Handlers may not work sometimes.
