@@ -2,23 +2,27 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Dimensions,
   Alert,
+  Text,
+  FlatList,
+  Dimensions,
   StatusBar,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionButton from 'react-native-action-button';
 import PropTypes from 'prop-types';
-import { PieChart } from 'react-native-svg-charts';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
+import RNPickerSelect from 'react-native-picker-select';
+import _ from 'lodash';
 
 import { theme } from '../../styles';
-import { formatBytes } from '../../helpers/utils';
 import DownloadService from '../../services/downloadService';
+import QuotaUsageRow from './QuotaUsageRow';
 
 const HEIGHT: number = Dimensions.get('window').height;
+const WIDTH: number = Dimensions.get('window').width;
 
 class QuotaUsage extends Component {
   static navigationOptions = {
@@ -33,6 +37,8 @@ class QuotaUsage extends Component {
     super(props);
     this.state = {
       quotaUsages: [],
+      sortPropety: null,
+      isRefreshing: false,
     };
     this.toastRef = React.createRef();
     this.fetchQuotaUsages = this.fetchQuotaUsages.bind(this);
@@ -53,10 +59,12 @@ class QuotaUsage extends Component {
   }
 
   async fetchQuotaUsages() {
+    this.setState({ isRefreshing: true });
     try {
       const response = await DownloadService.getQuotaUsages();
-      this.setState({ quotaUsages: response.data });
+      this.setState({ quotaUsages: response.data, isRefreshing: false });
     } catch (error) {
+      this.setState({ isRefreshing: false });
       Alert.alert('Error', 'An error occured while fetching quota usages');
     }
   }
@@ -101,31 +109,60 @@ class QuotaUsage extends Component {
     );
   }
 
-  getRandomColor() {
-    return (`#${(Math.random() * 0xFFFFFF << 0).toString(16)}000000`).slice(0, 7);
+  sortItems(list = [], sortPropety = '', isAscending = true) {
+    return isAscending ? _.sortBy(list, sortPropety)
+      : _.chain(list).sortBy(sortPropety).reverse().value();
+  }
+
+  renderPlaceholder() {
+    return (
+      <View pointerEvents={'box-none'} style={styles.placeholderContainer}>
+        <Icon name="md-sad" size={45} color={'grey'} />
+        <Text style={styles.placeholderText}>No quota usages</Text>
+      </View>
+    );
   }
 
   render() {
-    const pieData = this.state.quotaUsages
-      .map(item => item.size)
-      .filter(value => value > 0)
-      .map((value, index) => ({
-        value,
-        svg: {
-          fill: this.getRandomColor(),
-          onPress: () => this.toastRef.current.show(`${this.state.quotaUsages[index].user_name} ${formatBytes(value)}`),
-        },
-        key: `pie-${index}`,
-      }));
-
     return (
       <View style={styles.container}>
         <StatusBar
           backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
-        <PieChart
-          style={{ height: HEIGHT / 2 }}
-          data={pieData}
+        <RNPickerSelect
+          placeholder={{
+            label: 'Sort Preference:',
+            value: null,
+          }}
+          items={[
+            {
+              label: 'Sort By: User',
+              value: 'user_name'
+            },
+            {
+              label: 'Sort By: Usage',
+              value: 'size'
+            }
+          ]}
+          onValueChange={(value) =>
+            this.setState({
+              sortPropety: value,
+              quotaUsages: this.sortItems(this.state.quotaUsages, value, value === 'user_name'),
+            })
+          }
+          disabled={this.state.quotaUsages.length === 0}
+          value={this.state.sortPropety}
         />
+        <FlatList
+          data={this.state.quotaUsages}
+          refreshing={this.state.isRefreshing}
+          onRefresh={this.fetchQuotaUsages}
+          style={{ paddingTop: 10 }}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({ item }) => <QuotaUsageRow item={item} />}
+        />
+        {!this.state.isRefreshing
+          && this.state.quotaUsages.length === 0
+          ? this.renderPlaceholder() : null}
         <ActionButton
           renderIcon={active => (active ?
             <Icon
@@ -168,12 +205,26 @@ export default connect(mapStateToProps)(QuotaUsage);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: HEIGHT / 7,
+    paddingTop: 20,
     backgroundColor: 'white',
   },
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
     color: 'white',
+  },
+  placeholderContainer: {
+    position: 'absolute',
+    width: WIDTH,
+    height: HEIGHT,
+    marginTop: -80,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    marginTop: 15,
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 23,
   },
 });
