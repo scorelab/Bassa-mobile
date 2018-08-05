@@ -18,10 +18,16 @@ export default function configureStore() {
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+  const middlewares = [navMiddleware, sagaMiddleware];
+
+  if (process.env.NODE_ENV === `development`) {
+    middlewares.push(logger);
+  }
+
   const store = createStore(
     persistedReducer,
     undefined,
-    compose(applyMiddleware(logger, navMiddleware, sagaMiddleware)),
+    compose(applyMiddleware(...middlewares)),
   );
 
   sagaMiddleware.run(rootSaga);
