@@ -21,3 +21,7 @@ export const userActions = {
 export const tokenActions = {
   SET_TOKEN_TO_HEADER: 'SET_TOKEN_TO_HEADER',
 };
+
+export const downloadsActions = {
+  UPDATE_LAST_DOWNLOAD_TIMESTAMP: 'UPDATE_LAST_DOWNLOAD_TIMESTAMP',
+};

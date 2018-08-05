@@ -23,6 +23,7 @@ import _ from 'lodash';
 import InProgressDownloadsRowFront from './InProgressDownloadsRowFront';
 import DownloadService from '../../services/downloadService';
 import { theme } from '../../styles';
+import { updateLastDownloadTimestamp } from '../../actions/downloadsActions';
 import { showPushNotification } from '../../helpers/utils';
 import APIConstants from '../../constants/API';
 import InProgressDownloadsRowBack from './InProgressDownloadsRowBack';
@@ -48,7 +49,9 @@ class InProgressDownloads extends Component {
       isPromptVisible: false,
       activeDownloads: [],
     };
-    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {});
+    this.socket = io(`${APIConstants.HOST_URL}:${APIConstants.HOST_PORT}/progress`, {
+      transports: ['websocket']
+    });
 
     this.socket.on('connect', () => {
       this.socket.emit('join', { room: this.props.user.currentUser.username });
@@ -64,6 +67,7 @@ class InProgressDownloads extends Component {
               `${activeDownloads[index].download_name} has been successfully downloaded`,
             );
             _.pullAt(activeDownloads, [index]);
+            this.props.updateLastDownloadTimestamp();
           } else {
             activeDownloads[index].progress = data.progress;
           }
@@ -217,9 +221,14 @@ class InProgressDownloads extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  downloads: state.downloads,
 });
 
-export default connect(mapStateToProps)(InProgressDownloads);
+const mapDispatchToProps = dispatch => ({
+  updateLastDownloadTimestamp: () => dispatch(updateLastDownloadTimestamp()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InProgressDownloads);
 
 const styles = StyleSheet.create({
   container: {
