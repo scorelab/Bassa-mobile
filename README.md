@@ -1,4 +1,7 @@
 # Bassa Mobile
+
+[![Join the chat at https://gitter.im/scorelab/Bassa-mobile](https://badges.gitter.im/scorelab/Bassa-mobile.svg)](https://gitter.im/scorelab/Bassa-mobile?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A cross-platform mobile client for [Bassa](https://github.com/scorelab/Bassa)
 
 ![Splash Screen](https://user-images.githubusercontent.com/15249242/42421797-1ff2632e-82f9-11e8-8338-7d603d965a85.png)
