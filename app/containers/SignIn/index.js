@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StatusBar,
   ScrollView,
@@ -11,19 +11,19 @@ import {
   StyleSheet,
   View,
   TextInput,
-} from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { TextField } from "react-native-material-textfield";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Button from "react-native-button";
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import { TextField } from 'react-native-material-textfield';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Button from 'react-native-button';
 
-import { signIn } from "../../actions/userActions";
-import { theme } from "../../styles";
-import ViewWrapper from "../../components/ViewWrapper";
-import LoadingIndicator from "../../components/LoadingIndicator";
+import { signIn } from '../../actions/userActions';
+import { theme } from '../../styles';
+import ViewWrapper from '../../components/ViewWrapper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-const HEIGHT: number = Dimensions.get("window").height;
+const HEIGHT: number = Dimensions.get('window').height;
 
 class SignIn extends Component {
   static navigationOptions = {
@@ -43,11 +43,11 @@ class SignIn extends Component {
       fadeAnimation: new Animated.Value(0),
       slideAnimationLeft: new Animated.Value(0),
       slideAnimationRight: new Animated.Value(0),
-      movingContainer: "right",
-      username: "",
-      password: "",
-      usernameError: "",
-      passwordError: "",
+      movingContainer: 'right',
+      username: '',
+      password: '',
+      usernameError: '',
+      passwordError: '',
       isLoading: false,
     };
 
@@ -68,12 +68,12 @@ class SignIn extends Component {
   }
 
   isValid() {
-    if (this.state.username === "") {
-      this.setState({ usernameError: "Username is required" });
+    if (this.state.username === '') {
+      this.setState({ usernameError: 'Username is required' });
       return false;
     }
-    if (this.state.password === "") {
-      this.setState({ passwordError: "Password is required" });
+    if (this.state.password === '') {
+      this.setState({ passwordError: 'Password is required' });
       return false;
     }
     return true;
@@ -108,7 +108,7 @@ class SignIn extends Component {
   renderSignInContainer() {
     return (
       <Animated.View
-        pointerEvents={this.state.isLoading ? "none" : "auto"}
+        pointerEvents={this.state.isLoading ? 'none' : 'auto'}
         style={[
           styles.controlsContainer,
           {
@@ -128,37 +128,37 @@ class SignIn extends Component {
           <View style={styles.signInTextFieldContainer}>
             <Icon name="user" size={30} style={{ marginRight: 8 }} />
             <TextInput
-              placeholder={"User name"}
-              placeholderTextColor={"#303030"}
+              placeholder={'User name'}
+              placeholderTextColor={'#303030'}
               value={this.state.username}
               onChangeText={text => this.setState({ username: text })}
-              returnKeyType={"next"}
-              underlineColorAndroid={"transparent"}
+              returnKeyType={'next'}
+              underlineColorAndroid={'transparent'}
               style={styles.signInTextField}
               onSubmitEditing={() => {
                 this.passwordInputRef.current.focus();
               }}
-              autoCapitalize={"none"}
-              returnKeyType={"next"}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
             />
           </View>
           <View style={styles.signInTextFieldContainer}>
             <Icon name="lock" size={30} style={{ marginRight: 8 }} />
             <TextInput
               ref={this.passwordInputRef}
-              placeholder={"Password"}
-              placeholderTextColor={"#303030"}
+              placeholder={'Password'}
+              placeholderTextColor={'#303030'}
               value={this.state.password}
               onChangeText={text => this.setState({ password: text })}
-              returnKeyType={"next"}
-              underlineColorAndroid={"transparent"}
+              returnKeyType={'next'}
+              underlineColorAndroid={'transparent'}
               style={styles.signInTextField}
               onSubmitEditing={() => {
                 this.onSignInPress();
               }}
               secureTextEntry={true}
-              autoCapitalize={"none"}
-              returnKeyType={"next"}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -172,7 +172,7 @@ class SignIn extends Component {
             <Button
               style={styles.buttonTitle}
               containerStyle={styles.buttonWrapper}
-              onPress={() => this.props.navigation.navigate("SignUp")}
+              onPress={() => this.props.navigation.navigate('SignUp')}
             >
               Sign Up
             </Button>
@@ -190,13 +190,13 @@ class SignIn extends Component {
         fromBackgroundStyle={styles.wrapperToBackground}
       >
         <StatusBar backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
-        <ScrollView keyboardDismissMode={"on-drag"} style={styles.container}>
+        <ScrollView keyboardDismissMode={'on-drag'} style={styles.container}>
           <View style={styles.topArea} />
           <View style={styles.mainContainer}>
             <Animated.View
               style={[
                 styles.logoBox,
-                this.state.movingContainer === "left" ? { height: HEIGHT } : {},
+                this.state.movingContainer === 'left' ? { height: HEIGHT } : {},
                 {
                   transform: [
                     {
@@ -209,7 +209,7 @@ class SignIn extends Component {
                 },
               ]}
             >
-              <Image source={require("../../images/bassa.png")} />
+              <Image source={require('../../images/bassa.png')} />
             </Animated.View>
             {this.renderSignInContainer()}
           </View>
@@ -245,27 +245,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoBox: {
-    position: "absolute",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonWrapper: {
     borderRadius: 100,
-    width: "100%",
+    width: '100%',
     borderWidth: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.PRIMARY_COLOR,
     elevation: 15,
     paddingVertical: 16,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginBottom: 15,
   },
   buttonTitle: {
-    fontWeight: "600",
-    textAlign: "center",
-    color: "#FFF",
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFF',
   },
   controlsContainer: {
     height: HEIGHT,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
   signInContainer: {
     marginTop: HEIGHT * 0.33,
-    backgroundColor: "#efefef",
+    backgroundColor: '#efefef',
     borderRadius: 10,
     paddingHorizontal: 25,
     paddingVertical: 20,
@@ -282,13 +282,13 @@ const styles = StyleSheet.create({
   signInText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
-    fontWeight: "300",
+    fontWeight: '300',
   },
   signInTextFieldContainer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: "#FFF",
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#FFF',
     borderRadius: 100,
     elevation: 15,
     marginBottom: 15,
@@ -297,24 +297,24 @@ const styles = StyleSheet.create({
   signInTextField: {
     fontSize: 18,
     paddingVertical: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     flex: 1,
   },
   signInLink: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
-    fontWeight: "400",
-    textDecorationLine: "underline",
+    fontWeight: '400',
+    textDecorationLine: 'underline',
   },
   mainContainer: {
     flex: 1,
     height: HEIGHT,
-    justifyContent: "center",
-    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5),
+    justifyContent: 'center',
+    marginTop: -HEIGHT / 5 - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
     height: HEIGHT / 5,
     zIndex: 10,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
 });

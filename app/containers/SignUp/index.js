@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StatusBar,
   ScrollView,
@@ -11,19 +11,19 @@ import {
   StyleSheet,
   View,
   TextInput,
-} from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { TextField } from "react-native-material-textfield";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Button from "react-native-button";
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import { TextField } from 'react-native-material-textfield';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Button from 'react-native-button';
 
-import { signUp } from "../../actions/userActions";
-import { theme } from "../../styles";
-import ViewWrapper from "../../components/ViewWrapper";
-import LoadingIndicator from "../../components/LoadingIndicator";
+import { signUp } from '../../actions/userActions';
+import { theme } from '../../styles';
+import ViewWrapper from '../../components/ViewWrapper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-const HEIGHT: number = Dimensions.get("window").height;
+const HEIGHT: number = Dimensions.get('window').height;
 
 class SignUp extends Component {
   static navigationOptions = {
@@ -43,15 +43,15 @@ class SignUp extends Component {
       fadeAnimation: new Animated.Value(0),
       slideAnimationLeft: new Animated.Value(0),
       slideAnimationRight: new Animated.Value(0),
-      movingContainer: "right",
-      username: "",
-      password: "",
-      email: "",
-      confirmPassword: "",
-      usernameError: "",
-      passwordError: "",
-      emailError: "",
-      confirmPasswordError: "",
+      movingContainer: 'right',
+      username: '',
+      password: '',
+      email: '',
+      confirmPassword: '',
+      usernameError: '',
+      passwordError: '',
+      emailError: '',
+      confirmPasswordError: '',
       isLoading: false,
     };
 
@@ -84,38 +84,38 @@ class SignUp extends Component {
   }
 
   isValid() {
-    if (this.state.username === "") {
-      this.setState({ usernameError: "Username is required" });
+    if (this.state.username === '') {
+      this.setState({ usernameError: 'Username is required' });
       return false;
     }
-    if (this.state.email === "") {
-      this.setState({ emailError: "Email is required" });
+    if (this.state.email === '') {
+      this.setState({ emailError: 'Email is required' });
       return false;
     }
-    if (this.state.email !== "" && !this.validateEmail(this.state.email)) {
-      this.setState({ emailError: "Email is not valid" });
+    if (this.state.email !== '' && !this.validateEmail(this.state.email)) {
+      this.setState({ emailError: 'Email is not valid' });
       return false;
     }
-    if (this.state.password === "") {
-      this.setState({ passwordError: "Password is required" });
+    if (this.state.password === '') {
+      this.setState({ passwordError: 'Password is required' });
       return false;
     }
-    if (this.state.password !== "" && this.state.password.length < 8) {
+    if (this.state.password !== '' && this.state.password.length < 8) {
       this.setState({
-        passwordError: "Password must have at least 8 characters",
+        passwordError: 'Password must have at least 8 characters',
       });
       return false;
     }
-    if (this.state.confirmPassword === "") {
-      this.setState({ confirmPasswordError: "Confirm Password is required" });
+    if (this.state.confirmPassword === '') {
+      this.setState({ confirmPasswordError: 'Confirm Password is required' });
       return false;
     }
     if (
-      this.state.confirmPassword !== "" &&
+      this.state.confirmPassword !== '' &&
       this.state.confirmPassword !== this.state.password
     ) {
       this.setState({
-        confirmPasswordError: "Confirm Password does not match",
+        confirmPasswordError: 'Confirm Password does not match',
       });
       return false;
     }
@@ -151,7 +151,7 @@ class SignUp extends Component {
   renderSignUpContainer() {
     return (
       <Animated.View
-        pointerEvents={this.state.isLoading ? "none" : "auto"}
+        pointerEvents={this.state.isLoading ? 'none' : 'auto'}
         style={[
           styles.controlsContainer,
           {
@@ -171,51 +171,51 @@ class SignUp extends Component {
           <View style={styles.signUpTextFieldContainer}>
             <Icon name="user" size={30} style={{ marginRight: 8 }} />
             <TextInput
-              placeholder={"User name"}
-              placeholderTextColor={"#303030"}
+              placeholder={'User name'}
+              placeholderTextColor={'#303030'}
               value={this.state.username}
               onChangeText={text => this.setState({ username: text })}
-              underlineColorAndroid={"transparent"}
+              underlineColorAndroid={'transparent'}
               style={styles.signUpTextField}
               onSubmitEditing={() => {
                 this.emaiInputRef.current.focus();
               }}
-              autoCapitalize={"none"}
-              returnKeyType={"next"}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
             />
           </View>
           <View style={styles.signUpTextFieldContainer}>
             <Icon name="mail" size={30} style={{ marginRight: 8 }} />
             <TextInput
               ref={this.emaiInputRef}
-              placeholder={"Email"}
-              placeholderTextColor={"#303030"}
+              placeholder={'Email'}
+              placeholderTextColor={'#303030'}
               value={this.state.email}
               onChangeText={text => this.setState({ email: text })}
-              underlineColorAndroid={"transparent"}
+              underlineColorAndroid={'transparent'}
               style={styles.signUpTextField}
               onSubmitEditing={() => {
                 this.passwordInputRef.current.focus();
               }}
-              autoCapitalize={"none"}
-              returnKeyType={"next"}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
             />
           </View>
           <View style={styles.signUpTextFieldContainer}>
             <Icon name="lock" size={30} style={{ marginRight: 8 }} />
             <TextInput
               ref={this.passwordInputRef}
-              placeholder={"Password"}
-              placeholderTextColor={"#303030"}
+              placeholder={'Password'}
+              placeholderTextColor={'#303030'}
               value={this.state.password}
               onChangeText={text => this.setState({ password: text })}
-              underlineColorAndroid={"transparent"}
+              underlineColorAndroid={'transparent'}
               style={styles.signUpTextField}
               onSubmitEditing={() => {
                 this.confirmPasswordInputRef.current.focus();
               }}
-              autoCapitalize={"none"}
-              returnKeyType={"next"}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
               secureTextEntry={true}
             />
           </View>
@@ -223,17 +223,17 @@ class SignUp extends Component {
             <Icon name="lock" size={30} style={{ marginRight: 8 }} />
             <TextInput
               ref={this.confirmPasswordInputRef}
-              placeholder={"Confirm Password"}
-              placeholderTextColor={"#303030"}
+              placeholder={'Confirm Password'}
+              placeholderTextColor={'#303030'}
               value={this.state.confirmPassword}
               onChangeText={text => this.setState({ confirmPassword: text })}
-              underlineColorAndroid={"transparent"}
+              underlineColorAndroid={'transparent'}
               style={styles.signUpTextField}
               onSubmitEditing={() => {
                 this.onSignUpPress();
               }}
-              autoCapitalize={"none"}
-              returnKeyType={"go"}
+              autoCapitalize={'none'}
+              returnKeyType={'go'}
               secureTextEntry={true}
             />
           </View>
@@ -260,13 +260,13 @@ class SignUp extends Component {
         fromBackgroundStyle={styles.wrapperToBackground}
       >
         <StatusBar backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
-        <ScrollView keyboardDismissMode={"on-drag"} style={styles.container}>
+        <ScrollView keyboardDismissMode={'on-drag'} style={styles.container}>
           <View style={styles.topArea} />
           <View style={styles.mainContainer}>
             <Animated.View
               style={[
                 styles.logoBox,
-                this.state.movingContainer === "left" ? { height: HEIGHT } : {},
+                this.state.movingContainer === 'left' ? { height: HEIGHT } : {},
                 {
                   transform: [
                     {
@@ -279,7 +279,7 @@ class SignUp extends Component {
                 },
               ]}
             >
-              <Image source={require("../../images/bassa.png")} />
+              <Image source={require('../../images/bassa.png')} />
             </Animated.View>
             {this.renderSignUpContainer()}
           </View>
@@ -314,33 +314,33 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 100,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   container: {
     flex: 1,
   },
   logoBox: {
-    position: "absolute",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonWrapper: {
     borderRadius: 100,
-    width: "100%",
+    width: '100%',
     borderWidth: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.PRIMARY_COLOR,
     elevation: 15,
     paddingVertical: 16,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginBottom: 15,
   },
   buttonTitle: {
-    fontWeight: "600",
-    textAlign: "center",
-    color: "#FFF",
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFF',
   },
   controlsContainer: {
     height: HEIGHT,
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
   signUpContainer: {
     marginTop: HEIGHT * 0.33,
-    backgroundColor: "#efefef",
+    backgroundColor: '#efefef',
     borderRadius: 10,
     paddingHorizontal: 25,
     paddingVertical: 20,
@@ -357,13 +357,13 @@ const styles = StyleSheet.create({
   signUpText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
-    fontWeight: "300",
+    fontWeight: '300',
   },
   signUpTextFieldContainer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: "#FFF",
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#FFF',
     borderRadius: 100,
     elevation: 15,
     marginBottom: 15,
@@ -372,18 +372,18 @@ const styles = StyleSheet.create({
   signUpTextField: {
     fontSize: 18,
     paddingVertical: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     flex: 1,
   },
   mainContainer: {
     flex: 1,
     height: HEIGHT,
-    justifyContent: "center",
-    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5),
+    justifyContent: 'center',
+    marginTop: -HEIGHT / 5 - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
     height: HEIGHT / 6,
     zIndex: 10,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
 });
