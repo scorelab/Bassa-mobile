@@ -11,7 +11,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { TextField } from 'react-native-material-textfield';
+import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-native-button';
@@ -21,7 +21,7 @@ import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
-const HEIGHT: number = Dimensions.get('window').height;
+const HEIGHT = Dimensions.get('window').height;
 
 class SignIn extends Component {
   static navigationOptions = {
@@ -131,13 +131,13 @@ class SignIn extends Component {
       >
         <View
           style={styles.signInContainer}>
-          <TextField
-            label={'Username'}
+          <Input
+            placeholder={'Username'}
+            placeholderTextColor={"#000"}
             error={this.state.usernameError}
-            tintColor={'#FFF'}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
+            leftIcon={{type: 'font-awesome', name: 'user'}}
+            containerStyle={styles.TextInputStyle}
+            inputContainerStyle = {{borderBottomColor: 'rgba(255, 255, 255, 0)'}}
             autoCapitalize={'none'}
             onChangeText={text => this.setState({ usernameError: null, username: text })}
             returnKeyType={'next'}
@@ -146,14 +146,14 @@ class SignIn extends Component {
               this.passwordInputRef.current.focus();
             }}
           />
-          <TextField
+          <Input
             ref={this.passwordInputRef}
-            label={'Password'}
-            tintColor={'#FFF'}
+            placeholder={'Password'}
+            placeholderTextColor={"#000"}
+            containerStyle={styles.TextInputStyle}
+            inputContainerStyle = {{borderBottomColor: 'rgba(255, 255, 255, 0)'}}
+            leftIcon={{type: 'font-awesome', name: 'lock'}}
             error={this.state.passwordError}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
             autoCapitalize={'none'}
             secureTextEntry={true}
             onChangeText={text => this.setState({ passwordError: null, password: text })}
@@ -236,11 +236,23 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
 
 const styles = StyleSheet.create({
+  TextInputStyle: {
+    shadowColor: '#000',
+    shadowOffset: { width: 5, height: 10 },
+    width: 255,
+    height: 50,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 38,
+    marginTop: 20,
+    elevation: 1
+  },
   wrapperToBackground: {
     backgroundColor: theme.PRIMARY_COLOR,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 10,
   },
   container: {
     flex: 1,
@@ -252,16 +264,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonWrapper: {
-    height: 35,
+    height: 50,
     borderRadius: 100,
-    width: 200,
-    borderWidth: 2,
+    width: 260,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#FFF',
     padding: 5,
     alignSelf: 'center',
     marginTop: 20,
+    backgroundColor: theme.PRIMARY_COLOR,
+    elevation: 2
   },
   buttonTitle: {
     fontWeight: '400',
@@ -273,7 +285,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35,
   },
   signInContainer: {
-    marginTop: HEIGHT * 0.33,
+    marginTop: HEIGHT * 0.4,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    padding: 5
   },
   signInText: {
     color: theme.TEXT_COLOR_INVERT,
