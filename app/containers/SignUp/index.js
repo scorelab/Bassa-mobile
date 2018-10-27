@@ -167,9 +167,15 @@ class SignUp extends Component {
           },
         ]}
       >
-        <View style={styles.signUpContainer}>
-          <View style={styles.signUpTextFieldContainer}>
-            <Icon name="user" size={30} style={{ marginRight: 8 }} />
+        <View
+          style={styles.signUpContainer}>
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="user"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               placeholder={'User name'}
               placeholderTextColor={'#303030'}
@@ -184,8 +190,13 @@ class SignUp extends Component {
               returnKeyType={'next'}
             />
           </View>
-          <View style={styles.signUpTextFieldContainer}>
-            <Icon name="mail" size={30} style={{ marginRight: 8 }} />
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="mail"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               ref={this.emaiInputRef}
               placeholder={'Email'}
@@ -201,8 +212,13 @@ class SignUp extends Component {
               returnKeyType={'next'}
             />
           </View>
-          <View style={styles.signUpTextFieldContainer}>
-            <Icon name="lock" size={30} style={{ marginRight: 8 }} />
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="lock"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               ref={this.passwordInputRef}
               placeholder={'Password'}
@@ -219,8 +235,13 @@ class SignUp extends Component {
               secureTextEntry={true}
             />
           </View>
-          <View style={styles.signUpTextFieldContainer}>
-            <Icon name="lock" size={30} style={{ marginRight: 8 }} />
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="lock"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               ref={this.confirmPasswordInputRef}
               placeholder={'Confirm Password'}
@@ -237,7 +258,8 @@ class SignUp extends Component {
               secureTextEntry={true}
             />
           </View>
-          <View style={styles.buttonContainer}>
+          <View
+            style={styles.buttonContainer}>
             <Button
               style={styles.buttonTitle}
               containerStyle={styles.buttonWrapper}
@@ -259,10 +281,17 @@ class SignUp extends Component {
         withMove={false}
         fromBackgroundStyle={styles.wrapperToBackground}
       >
-        <StatusBar backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
-        <ScrollView keyboardDismissMode={'on-drag'} style={styles.container}>
-          <View style={styles.topArea} />
-          <View style={styles.mainContainer}>
+        <StatusBar
+          backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
+        <ScrollView
+          keyboardDismissMode={'on-drag'}
+          style={styles.container}
+        >
+          <View
+            style={styles.topArea} />
+          <View
+            style={styles.mainContainer}
+          >
             <Animated.View
               style={[
                 styles.logoBox,
@@ -279,11 +308,13 @@ class SignUp extends Component {
                 },
               ]}
             >
-              <Image source={require('../../images/bassa.png')} />
+              <Image
+                source={require('../../images/bassa.png')} />
             </Animated.View>
             {this.renderSignUpContainer()}
           </View>
-          <LoadingIndicator isVisible={this.state.isLoading} />
+          <LoadingIndicator
+            isVisible={this.state.isLoading} />
         </ScrollView>
       </ViewWrapper>
     );

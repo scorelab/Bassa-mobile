@@ -124,9 +124,15 @@ class SignIn extends Component {
           },
         ]}
       >
-        <View style={styles.signInContainer}>
-          <View style={styles.signInTextFieldContainer}>
-            <Icon name="user" size={30} style={{ marginRight: 8 }} />
+        <View
+          style={styles.signInContainer}>
+          <View
+            style={styles.signInTextFieldContainer}>
+            <Icon
+              name="user"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               placeholder={'User name'}
               placeholderTextColor={'#303030'}
@@ -142,8 +148,13 @@ class SignIn extends Component {
               returnKeyType={'next'}
             />
           </View>
-          <View style={styles.signInTextFieldContainer}>
-            <Icon name="lock" size={30} style={{ marginRight: 8 }} />
+          <View
+            style={styles.signInTextFieldContainer}>
+            <Icon
+              name="lock"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
             <TextInput
               ref={this.passwordInputRef}
               placeholder={'Password'}
@@ -161,7 +172,8 @@ class SignIn extends Component {
               returnKeyType={'next'}
             />
           </View>
-          <View style={styles.buttonContainer}>
+          <View
+            style={styles.buttonContainer}>
             <Button
               style={styles.buttonTitle}
               containerStyle={styles.buttonWrapper}
@@ -189,10 +201,15 @@ class SignIn extends Component {
         withMove={false}
         fromBackgroundStyle={styles.wrapperToBackground}
       >
-        <StatusBar backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
-        <ScrollView keyboardDismissMode={'on-drag'} style={styles.container}>
-          <View style={styles.topArea} />
-          <View style={styles.mainContainer}>
+        <StatusBar
+          backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
+        <ScrollView
+          keyboardDismissMode={'on-drag'}
+          style={styles.container}>
+          <View
+            style={styles.topArea} />
+          <View
+            style={styles.mainContainer}>
             <Animated.View
               style={[
                 styles.logoBox,
@@ -209,11 +226,13 @@ class SignIn extends Component {
                 },
               ]}
             >
-              <Image source={require('../../images/bassa.png')} />
+              <Image
+                source={require('../../images/bassa.png')} />
             </Animated.View>
             {this.renderSignInContainer()}
           </View>
-          <LoadingIndicator isVisible={this.state.isLoading} />
+          <LoadingIndicator
+            isVisible={this.state.isLoading} />
         </ScrollView>
       </ViewWrapper>
     );
