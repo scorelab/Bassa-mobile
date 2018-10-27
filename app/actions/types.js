@@ -25,3 +25,11 @@ export const tokenActions = {
 export const downloadsActions = {
   UPDATE_LAST_DOWNLOAD_TIMESTAMP: 'UPDATE_LAST_DOWNLOAD_TIMESTAMP',
 };
+
+export const constantsActions = {
+  GET_IP: 'GET_IP',
+  GET_PORT: 'GET_PORT',
+  GET_KEY: 'GET_KEY',
+  SET_IP: 'SET_IP',
+  SET_PORT: 'SET_PORT'
+}

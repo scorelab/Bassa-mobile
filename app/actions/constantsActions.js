@@ -1,32 +1,33 @@
+import {constantsActions} from './types'
 
 export const getIP = () => {
     return {
-        type: "GET_IP"
+        type: constantsActions.GET_IP
     }
 }
 
 export const getPort = () => {
     return {
-        type: "GET_PORT"
+        type: constantsActions.GET_PORT
     }
 }
 
 export const getKey = () => {
     return {
-        type: "GET_KEY"
+        type: constantsActions.GET_KEY
     }
 }
 
 export const setIP = (ip) => {
     return {
-        type: "SET_IP",
+        type: constantsActions.SET_IP,
         ip
     }
 }
 
 export const setPort = (port) => {
     return {
-        type: "SET_PORT",
+        type: constantsActions.SET_PORT,
         port
     }
 }
