@@ -80,49 +80,56 @@ class SignIn extends Component {
   }
 
   startComponentAnimation() {
-    Animated.timing(this.state.moveAnimation, {
-      toValue: 1,
-      duration: 900,
-      easing: Easing.inOut(Easing.quad),
-      useNativeDriver: true,
-    }).start();
+    Animated.timing(
+      this.state.moveAnimation,
+      {
+        toValue: 1,
+        duration: 900,
+        easing: Easing.inOut(Easing.quad),
+        useNativeDriver: true
+      }
+    ).start();
 
     Animated.sequence([
       Animated.delay(600),
-      Animated.timing(this.state.fadeAnimation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }),
+      Animated.timing(
+        this.state.fadeAnimation,
+        {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        },
+      ),
     ]).start();
   }
 
   startSignInAnimation(reverse = false) {
-    Animated.timing(this.state.fadeAnimation, {
-      toValue: reverse ? 1 : 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
+    Animated.timing(
+      this.state.fadeAnimation,
+      {
+        toValue: reverse ? 1 : 0,
+        duration: 300,
+        useNativeDriver: true,
+      },
+    ).start();
   }
 
   renderSignInContainer() {
     return (
       <Animated.View
         pointerEvents={this.state.isLoading ? 'none' : 'auto'}
-        style={[
-          styles.controlsContainer,
-          {
-            opacity: this.state.fadeAnimation,
-            transform: [
-              {
-                translateY: this.state.fadeAnimation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [5, -5],
-                }),
-              },
-            ],
-          },
-        ]}
+        style={[styles.controlsContainer,
+        {
+          opacity: this.state.fadeAnimation,
+          transform: [
+            {
+              translateY: this.state.fadeAnimation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [5, -5],
+              }),
+            },
+          ],
+        }]}
       >
         <View
           style={styles.signInContainer}>
