@@ -10,7 +10,7 @@ import {
   Platform,
   StyleSheet,
   View,
-  TextInput
+  TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { TextField } from "react-native-material-textfield";
@@ -27,12 +27,12 @@ const HEIGHT: number = Dimensions.get("window").height;
 
 class SignUp extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   static propTypes = {
     signUp: PropTypes.func.isRequired,
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -52,7 +52,7 @@ class SignUp extends Component {
       passwordError: "",
       emailError: "",
       confirmPasswordError: "",
-      isLoading: false
+      isLoading: false,
     };
 
     this.passwordInputRef = React.createRef();
@@ -73,7 +73,7 @@ class SignUp extends Component {
         this.state.username,
         this.state.email,
         this.state.password,
-        this.state.confirmPassword
+        this.state.confirmPassword,
       );
     }
   }
@@ -102,7 +102,7 @@ class SignUp extends Component {
     }
     if (this.state.password !== "" && this.state.password.length < 8) {
       this.setState({
-        passwordError: "Password must have at least 8 characters"
+        passwordError: "Password must have at least 8 characters",
       });
       return false;
     }
@@ -115,7 +115,7 @@ class SignUp extends Component {
       this.state.confirmPassword !== this.state.password
     ) {
       this.setState({
-        confirmPasswordError: "Confirm Password does not match"
+        confirmPasswordError: "Confirm Password does not match",
       });
       return false;
     }
@@ -127,7 +127,7 @@ class SignUp extends Component {
       toValue: 1,
       duration: 900,
       easing: Easing.inOut(Easing.quad),
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
 
     Animated.sequence([
@@ -135,8 +135,8 @@ class SignUp extends Component {
       Animated.timing(this.state.fadeAnimation, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: true
-      })
+        useNativeDriver: true,
+      }),
     ]).start();
   }
 
@@ -144,7 +144,7 @@ class SignUp extends Component {
     Animated.timing(this.state.fadeAnimation, {
       toValue: reverse ? 1 : 0,
       duration: 300,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   }
 
@@ -160,11 +160,11 @@ class SignUp extends Component {
               {
                 translateY: this.state.fadeAnimation.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [5, -5]
-                })
-              }
-            ]
-          }
+                  outputRange: [5, -5],
+                }),
+              },
+            ],
+          },
         ]}
       >
         <View style={styles.signUpContainer}>
@@ -272,11 +272,11 @@ class SignUp extends Component {
                     {
                       translateY: this.state.moveAnimation.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [0, -(HEIGHT * 0.275)]
-                      })
-                    }
-                  ]
-                }
+                        outputRange: [0, -(HEIGHT * 0.275)],
+                      }),
+                    },
+                  ],
+                },
               ]}
             >
               <Image source={require("../../images/bassa.png")} />
@@ -292,38 +292,38 @@ class SignUp extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  app: state.app
+  app: state.app,
 });
 
 const mapDispatchToProps = dispatch => ({
   signUp: (username, email, password, confirmPassword) =>
-    dispatch(signUp(username, email, password, confirmPassword))
+    dispatch(signUp(username, email, password, confirmPassword)),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SignUp);
 
 const styles = StyleSheet.create({
   wrapperToBackground: {
-    backgroundColor: theme.PRIMARY_COLOR
+    backgroundColor: theme.PRIMARY_COLOR,
   },
   buttonContainer: {
-    marginTop: 10
+    marginTop: 10,
   },
   spacer: {
     height: 100,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   container: {
-    flex: 1
+    flex: 1,
   },
   logoBox: {
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonWrapper: {
     borderRadius: 100,
@@ -335,16 +335,16 @@ const styles = StyleSheet.create({
     elevation: 15,
     paddingVertical: 16,
     alignSelf: "center",
-    marginBottom: 15
+    marginBottom: 15,
   },
   buttonTitle: {
     fontWeight: "600",
     textAlign: "center",
-    color: "#FFF"
+    color: "#FFF",
   },
   controlsContainer: {
     height: HEIGHT,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   signUpContainer: {
     marginTop: HEIGHT * 0.33,
@@ -352,12 +352,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 25,
     paddingVertical: 20,
-    elevation: 5
+    elevation: 5,
   },
   signUpText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
-    fontWeight: "300"
+    fontWeight: "300",
   },
   signUpTextFieldContainer: {
     display: "flex",
@@ -367,23 +367,23 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     elevation: 15,
     marginBottom: 15,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   signUpTextField: {
     fontSize: 18,
     paddingVertical: 16,
     fontWeight: "600",
-    flex: 1
+    flex: 1,
   },
   mainContainer: {
     flex: 1,
     height: HEIGHT,
     justifyContent: "center",
-    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5)
+    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5),
   },
   topArea: {
     height: HEIGHT / 6,
     zIndex: 10,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });

@@ -10,7 +10,7 @@ import {
   Platform,
   StyleSheet,
   View,
-  TextInput
+  TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { TextField } from "react-native-material-textfield";
@@ -27,12 +27,12 @@ const HEIGHT: number = Dimensions.get("window").height;
 
 class SignIn extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   static propTypes = {
     signIn: PropTypes.func.isRequired,
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -48,7 +48,7 @@ class SignIn extends Component {
       password: "",
       usernameError: "",
       passwordError: "",
-      isLoading: false
+      isLoading: false,
     };
 
     this.passwordInputRef = React.createRef();
@@ -84,7 +84,7 @@ class SignIn extends Component {
       toValue: 1,
       duration: 900,
       easing: Easing.inOut(Easing.quad),
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
 
     Animated.sequence([
@@ -92,8 +92,8 @@ class SignIn extends Component {
       Animated.timing(this.state.fadeAnimation, {
         toValue: 1,
         duration: 300,
-        useNativeDriver: true
-      })
+        useNativeDriver: true,
+      }),
     ]).start();
   }
 
@@ -101,7 +101,7 @@ class SignIn extends Component {
     Animated.timing(this.state.fadeAnimation, {
       toValue: reverse ? 1 : 0,
       duration: 300,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   }
 
@@ -117,11 +117,11 @@ class SignIn extends Component {
               {
                 translateY: this.state.fadeAnimation.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [5, -5]
-                })
-              }
-            ]
-          }
+                  outputRange: [5, -5],
+                }),
+              },
+            ],
+          },
         ]}
       >
         <View style={styles.signInContainer}>
@@ -202,11 +202,11 @@ class SignIn extends Component {
                     {
                       translateY: this.state.moveAnimation.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [0, -(HEIGHT * 0.275)]
-                      })
-                    }
-                  ]
-                }
+                        outputRange: [0, -(HEIGHT * 0.275)],
+                      }),
+                    },
+                  ],
+                },
               ]}
             >
               <Image source={require("../../images/bassa.png")} />
@@ -222,33 +222,33 @@ class SignIn extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  app: state.app
+  app: state.app,
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: (username, password) => dispatch(signIn(username, password))
+  signIn: (username, password) => dispatch(signIn(username, password)),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SignIn);
 
 const styles = StyleSheet.create({
   wrapperToBackground: {
-    backgroundColor: theme.PRIMARY_COLOR
+    backgroundColor: theme.PRIMARY_COLOR,
   },
   buttonContainer: {
-    marginTop: 10
+    marginTop: 10,
   },
   container: {
-    flex: 1
+    flex: 1,
   },
   logoBox: {
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonWrapper: {
     borderRadius: 100,
@@ -260,16 +260,16 @@ const styles = StyleSheet.create({
     elevation: 15,
     paddingVertical: 16,
     alignSelf: "center",
-    marginBottom: 15
+    marginBottom: 15,
   },
   buttonTitle: {
     fontWeight: "600",
     textAlign: "center",
-    color: "#FFF"
+    color: "#FFF",
   },
   controlsContainer: {
     height: HEIGHT,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   signInContainer: {
     marginTop: HEIGHT * 0.33,
@@ -277,12 +277,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 25,
     paddingVertical: 20,
-    elevation: 5
+    elevation: 5,
   },
   signInText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
-    fontWeight: "300"
+    fontWeight: "300",
   },
   signInTextFieldContainer: {
     display: "flex",
@@ -292,29 +292,29 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     elevation: 15,
     marginBottom: 15,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   signInTextField: {
     fontSize: 18,
     paddingVertical: 16,
     fontWeight: "600",
-    flex: 1
+    flex: 1,
   },
   signInLink: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
     fontWeight: "400",
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
   },
   mainContainer: {
     flex: 1,
     height: HEIGHT,
     justifyContent: "center",
-    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5)
+    marginTop: -HEIGHT / 5 - (Platform.OS === "ios" ? -2.5 : 9.5),
   },
   topArea: {
     height: HEIGHT / 5,
     zIndex: 10,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });
