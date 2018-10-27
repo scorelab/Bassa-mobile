@@ -25,3 +25,9 @@ export const tokenActions = {
 export const downloadsActions = {
   UPDATE_LAST_DOWNLOAD_TIMESTAMP: 'UPDATE_LAST_DOWNLOAD_TIMESTAMP',
 };
+
+export const constantsActions = {
+  GET_HOST_URL: 'GET_HOST_URL',
+  GET_HOST_PORT: 'GET_HOST_PORT',
+  GET_KEY: 'GET_KEY',
+};
