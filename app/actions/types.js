@@ -30,4 +30,7 @@ export const constantsActions = {
   GET_HOST_URL: 'GET_HOST_URL',
   GET_HOST_PORT: 'GET_HOST_PORT',
   GET_KEY: 'GET_KEY',
+  SET_HOST_URL: 'SET_HOST_URL',
+  SET_HOST_PORT: 'SET_HOST_PORT',
+  SET_KEY: 'SET_KEY',
 };
