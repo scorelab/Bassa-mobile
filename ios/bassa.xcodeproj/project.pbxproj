@@ -51,6 +51,8 @@
 		174738A02C984505AF1125A5 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F92CA6EE92B4D11A3AA3855 /* Zocial.ttf */; };
 		4D7D80AC1DFC4ADDA7E0791B /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E2FF11D3604B7A8E021EDD /* libRNSpinkit.a */; };
 		7DB8308892084A2696CBAC72 /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE435B46B444FED868C9F88 /* libRNKeychain.a */; };
+		8DD999D6821A436BB6DB10AE /* libRNVersionNumber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EE4726FC8648BAA8AC7E20 /* libRNVersionNumber.a */; };
+		27074875AB6B47868F957E92 /* libRNVersionNumber-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 564B0F8220CB43BCA69D6740 /* libRNVersionNumber-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -373,6 +375,9 @@
 		18E2FF11D3604B7A8E021EDD /* libRNSpinkit.a */ = {isa = PBXFileReference; name = "libRNSpinkit.a"; path = "libRNSpinkit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		D3A85B33F5464ABBB1FBC23B /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; name = "RNKeychain.xcodeproj"; path = "../node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		CCE435B46B444FED868C9F88 /* libRNKeychain.a */ = {isa = PBXFileReference; name = "libRNKeychain.a"; path = "libRNKeychain.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E2BD433F5FC2402AA113893E /* RNVersionNumber.xcodeproj */ = {isa = PBXFileReference; name = "RNVersionNumber.xcodeproj"; path = "../node_modules/react-native-version-number/ios/RNVersionNumber.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		23EE4726FC8648BAA8AC7E20 /* libRNVersionNumber.a */ = {isa = PBXFileReference; name = "libRNVersionNumber.a"; path = "libRNVersionNumber.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		564B0F8220CB43BCA69D6740 /* libRNVersionNumber-tvOS.a */ = {isa = PBXFileReference; name = "libRNVersionNumber-tvOS.a"; path = "libRNVersionNumber-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +409,7 @@
 				9322D12823CB4E4287AD3E30 /* libRNVectorIcons.a in Frameworks */,
 				4D7D80AC1DFC4ADDA7E0791B /* libRNSpinkit.a in Frameworks */,
 				7DB8308892084A2696CBAC72 /* libRNKeychain.a in Frameworks */,
+				8DD999D6821A436BB6DB10AE /* libRNVersionNumber.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +426,7 @@
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				AFF9CF9638894BB1833A70B5 /* libRNSVG-tvOS.a in Frameworks */,
+				27074875AB6B47868F957E92 /* libRNVersionNumber-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +601,7 @@
 				3DE227FA620D4F68A3972CE7 /* RNVectorIcons.xcodeproj */,
 				8C94A9988ADD49A4BC32AF8B /* RNSpinkit.xcodeproj */,
 				D3A85B33F5464ABBB1FBC23B /* RNKeychain.xcodeproj */,
+				E2BD433F5FC2402AA113893E /* RNVersionNumber.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1251,12 +1259,15 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bassa.app/bassa";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Debug;
@@ -1277,12 +1288,15 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bassa.app/bassa";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Release;
@@ -1307,6 +1321,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Debug;
@@ -1330,6 +1345,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Release;
@@ -1359,12 +1375,15 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Debug;
@@ -1394,12 +1413,15 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Release;
@@ -1428,12 +1450,15 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Debug;
@@ -1462,12 +1487,15 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-keychain\RNKeychainManager",
+					"$(SRCROOT)\..\node_modules\react-native-version-number\ios",
 				);
 			};
 			name = Release;

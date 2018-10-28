@@ -3,6 +3,8 @@ package com.bassa;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.apsl.versionnumber.RNVersionNumberPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
@@ -26,6 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNVersionNumberPackage(),
+            new VectorIconsPackage(),
             new KeychainPackage(),
             new ReactNativePushNotificationPackage(),
             new RNSpinkitPackage()
