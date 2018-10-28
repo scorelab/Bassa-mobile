@@ -1,3 +1,4 @@
+// TODO: Remove this, as APIConstants is available through Redux store
 const APIConstants = {
   HOST_URL: 'http://10.0.3.2',
   HOST_PORT: 5000,

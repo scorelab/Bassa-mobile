@@ -5,7 +5,7 @@ import AppNavigator from '../containers/RootNavigator';
 import appReducer from './appReducer';
 import userReducer from './userReducer';
 import downloadsReducer from './downloadsReducer';
-import constantsReducer from './constantReducer'
+import constantsReducer from './constantsReducer';
 
 const navReducer = createNavigationReducer(AppNavigator);
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   nav: navReducer,
   downloads: downloadsReducer,
-  constantsReducer: constantsReducer,
+  constants: constantsReducer,
 });
 
 export default rootReducer;

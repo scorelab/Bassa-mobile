@@ -27,9 +27,19 @@ export const downloadsActions = {
 };
 
 export const constantsActions = {
+<<<<<<< HEAD
   GET_IP: 'GET_IP',
   GET_PORT: 'GET_PORT',
   GET_KEY: 'GET_KEY',
   SET_IP: 'SET_IP',
   SET_PORT: 'SET_PORT'
 }
+=======
+  GET_HOST_URL: 'GET_HOST_URL',
+  GET_HOST_PORT: 'GET_HOST_PORT',
+  GET_KEY: 'GET_KEY',
+  SET_HOST_URL: 'SET_HOST_URL',
+  SET_HOST_PORT: 'SET_HOST_PORT',
+  SET_KEY: 'SET_KEY',
+};
+>>>>>>> 20b35757d022805dac2c45abcbfe1b857b2d9336
