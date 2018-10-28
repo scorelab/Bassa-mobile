@@ -5,6 +5,7 @@ import { createStackNavigator, createDrawerNavigator, createMaterialTopTabNaviga
 import Init from './Init';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import AboutScreen from './AboutScreen'
 
 import CustomDrawer from './CustomDrawer';
 
@@ -33,20 +34,20 @@ export const DownloadsTabs = createMaterialTopTabNavigator({
   CompletedDownloads: { screen: CompletedDownloads },
 
 }, {
-  initialRouteName: 'InProgressDownloads',
-  swipeEnabled: false,
-  tabBarOptions,
-});
+    initialRouteName: 'InProgressDownloads',
+    swipeEnabled: false,
+    tabBarOptions,
+  });
 
 export const AccountsTabs = createMaterialTopTabNavigator({
   Approvals: { screen: Approvals },
   QuotaUsage: { screen: QuotaUsage },
 
 }, {
-  initialRouteName: 'Approvals',
-  swipeEnabled: false,
-  tabBarOptions,
-});
+    initialRouteName: 'Approvals',
+    swipeEnabled: false,
+    tabBarOptions,
+  });
 
 const Drawer = createDrawerNavigator(
   {
@@ -62,6 +63,7 @@ const AppNavigator = createStackNavigator({
   Init: { screen: Init },
   SignIn: { screen: SignIn },
   SignUp: { screen: SignUp },
+  About: { screen: AboutScreen },
   MainDrawer: { screen: Drawer, navigationOptions: { header: null } },
 });
 
