@@ -9,6 +9,7 @@ const initialState = {
 
 function constantsReducer(state = initialState, action) {
   switch (action.type) {
+<<<<<<< HEAD
     case constantsActions.GET_HOST_URL:
       return state.hostUrl;
     case constantsActions.GET_HOST_PORT:
@@ -20,11 +21,21 @@ function constantsReducer(state = initialState, action) {
         ...state,
         hostUrl: action.payload,
       };
+=======
+
+    case constantsActions.SET_KEY:
+      return {
+        ...state,
+        key: action.payload,
+      };
+
+>>>>>>> HEAD@{1}
     case constantsActions.SET_HOST_PORT:
       return {
         ...state,
         hostPort: action.payload,
       };
+<<<<<<< HEAD
     case constantsActions.SET_KEY:
       return {
         ...state,
@@ -32,6 +43,27 @@ function constantsReducer(state = initialState, action) {
       };
     default:
       return state;
+=======
+
+    case constantsActions.SET_HOST_URL:
+      return {
+        ...state,
+        hostUrl: action.payload,
+      };
+
+    case constantsActions.GET_KEY:
+      return state.key;
+
+    case constantsActions.GET_HOST_PORT:
+      return state.hostPort;
+
+    case constantsActions.GET_HOST_URL:
+      return state.hostUrl;
+
+    default:
+      return state;
+
+>>>>>>> HEAD@{1}
   }
 }
 
