@@ -45,7 +45,7 @@ class CustomDrawer extends Component {
           { text: 'Yes', onPress: () => this.props.signOut() },
         ],
       );
-    } catch(error) {
+    } catch (error) {
       this.props.handleKeychainErrors(error);
     }
   }
@@ -80,6 +80,19 @@ class CustomDrawer extends Component {
                   <Text style={styles.listItemText}>Accounts</Text>
                 </TouchableOpacity>
                 {this.props.user.currentUser.isAdmin ? null : <Icon name="md-lock" size={20} color={'grey'} />}
+              </View>
+              <View style={styles.itemContainer}>
+                <TouchableOpacity
+                  onPress={() => this.navigateTo('About')}
+                  style={styles.touchableItem}
+                >
+                  <Icon
+                    name="md-information"
+                    size={15}
+                    color={theme.PRIMARY_STATUS_BAR_COLOR} />
+                  <View style={styles.iconSpcaer} />
+                  <Text style={styles.listItemText}>About Bassa</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.bottomContainer}>
