@@ -10,13 +10,16 @@ import {
   Platform,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-native-button';
+import Prompt from 'rn-prompt'
 
 import { signIn } from '../../actions/userActions';
+import { setHostPort, setHostUrl } from '../../actions/constantsActions'
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -47,10 +50,13 @@ class SignIn extends Component {
       usernameError: '',
       passwordError: '',
       isLoading: false,
+      isURLPromptVisible: false,
+      isPortPromptVisible: false,
     };
 
     this.passwordInputRef = React.createRef();
     this.onSignInPress = this.onSignInPress.bind(this);
+    this.onSettingsPressed = this.onSettingsPressed.bind(this)
   }
 
   componentDidMount() {
@@ -110,6 +116,10 @@ class SignIn extends Component {
         useNativeDriver: true,
       },
     ).start();
+  }
+
+  onSettingsPressed(e) {
+    this.setState({ isURLPromptVisible: true })
   }
 
   renderSignInContainer() {
@@ -178,6 +188,39 @@ class SignIn extends Component {
             >
               Sign Up
             </Button>
+            <Text
+              style={styles.signInLink}
+              onPress={this.onSettingsPressed}
+            >
+              Server Settings
+            </Text>
+            <Prompt
+              title="Set Bassa URL"
+              visible={this.state.isURLPromptVisible}
+              placeholder={"Bassa Server URL"}
+              defaultValue={String(this.props.constants.hostUrl)}
+              onCancel={() => this.setState({ isURLPromptVisible: false })}
+              onSubmit={txt => {
+                this.setState({
+                  isPortPromptVisible: true,
+                  isURLPromptVisible: false,
+                });
+                this.props.setUrl(txt);
+              }}
+            />
+            <Prompt
+              title="Set Bassa Port"
+              visible={this.state.isPortPromptVisible}
+              placeholder={"Bassa Server Port"}
+              defaultValue={String(this.props.constants.hostPort)}
+              onCancel={() => this.setState({ isPortPromptVisible: false })}
+              onSubmit={(txt) => {
+                this.setState({
+                  isPortPromptVisible: false,
+                });
+                this.props.setPort(txt);
+              }}
+            />
           </View>
         </View>
       </Animated.View>
@@ -219,7 +262,7 @@ class SignIn extends Component {
           <LoadingIndicator
             isVisible={this.state.isLoading} />
         </ScrollView>
-      </ViewWrapper>
+      </ViewWrapper >
     );
   }
 }
@@ -227,10 +270,13 @@ class SignIn extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   app: state.app,
+  constants: state.constants
 });
 
 const mapDispatchToProps = dispatch => ({
   signIn: (username, password) => dispatch(signIn(username, password)),
+  setUrl: url => dispatch(setHostUrl(url)),
+  setPort: port => dispatch(setHostPort(port)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
@@ -282,9 +328,11 @@ const styles = StyleSheet.create({
   },
   signInLink: {
     color: theme.TEXT_COLOR_INVERT,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '400',
     textDecorationLine: 'underline',
+    alignSelf: 'center',
+    marginTop: 16,
   },
   mainContainer: {
     flex: 1,
