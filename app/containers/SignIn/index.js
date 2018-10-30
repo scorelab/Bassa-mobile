@@ -10,6 +10,9 @@ import {
   Platform,
   StyleSheet,
   View,
+  Alert,
+  TouchableHighlight,
+  PanResponder
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
@@ -20,6 +23,8 @@ import { signIn } from '../../actions/userActions';
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
+
+import Prompt from 'rn-prompt';
 
 const HEIGHT: number = Dimensions.get('window').height;
 
@@ -47,6 +52,7 @@ class SignIn extends Component {
       usernameError: '',
       passwordError: '',
       isLoading: false,
+      isPromptVisible: false
     };
 
     this.passwordInputRef = React.createRef();
@@ -55,6 +61,15 @@ class SignIn extends Component {
 
   componentDidMount() {
     setTimeout(() => this.startComponentAnimation(), 1000);
+  }
+  
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder:(evt, gestureState) => true,
+      onPanResponderGrant: (evt, gestureState) => {
+        this.handleDoubleTap()
+      }
+    });
   }
 
   onSignInPress() {
@@ -183,7 +198,21 @@ class SignIn extends Component {
       </Animated.View>
     );
   }
-
+  changeValues = (value) => {
+    splitted_vals = value.split(":");
+    store.dispatch(setHostUrl(splitted_vals[0]));
+    store.dispatch(setHostPort(splitted_vals[1]));
+    this.setState({ isPromptVisible: false });
+  }
+  handleDoubleTap = () => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+      this.setState({ isPromptVisible: true });
+    } else {
+      this.lastTap = now;
+    }
+  }
   render() {
     return (
       <ViewWrapper
@@ -196,24 +225,33 @@ class SignIn extends Component {
         <ScrollView
           keyboardDismissMode={'on-drag'}
           style={styles.container}>
-          <View style={styles.topArea} />
+          <View style={styles.topArea} {...this._panResponder.panHandlers}/>
           <View
             style={styles.mainContainer}>
-            <Animated.View
-              style={[styles.logoBox, this.state.movingContainer === 'left' ? { height: HEIGHT } : {}, {
-                transform: [
-                  {
-                    translateY: this.state.moveAnimation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -(HEIGHT * 0.275)],
-                    }),
-                  },
-                ],
-              }]}
-            >
-              <Image
-                source={require('../../images/bassa.png')} />
-            </Animated.View>
+            <Prompt
+            title={'Change URL and port'}
+            placeholder={'Split them by colon (:)'}
+            submitText={'Change'}
+            visible={this.state.isPromptVisible}
+            onCancel={() => this.setState({
+              isPromptVisible: false,
+            })}
+            onSubmit={value => this.changeValues(value)} />
+              <Animated.View
+                style={[styles.logoBox, this.state.movingContainer === 'left' ? { height: HEIGHT } : {}, {
+                  transform: [
+                    {
+                      translateY: this.state.moveAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, -(HEIGHT * 0.275)],
+                      }),
+                    },
+                  ],
+                }]}
+              >
+                <Image
+                  source={require('../../images/bassa.png')} />
+              </Animated.View>
             {this.renderSignInContainer()}
           </View>
           <LoadingIndicator
@@ -293,7 +331,8 @@ const styles = StyleSheet.create({
     marginTop: (-HEIGHT / 5) - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
-    height: HEIGHT / 5,
+    height: HEIGHT / 7,
+    margin: 20,
     zIndex: 10,
     backgroundColor: 'transparent',
   },
