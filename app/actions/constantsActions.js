@@ -33,3 +33,9 @@ export const getHostPort = () => {
     type: constantsActions.GET_HOST_PORT,
   };
 };
+
+export const getHostUrl = () => {
+  return {
+    type: constantsActions.GET_HOST_URL,
+  };
+};
