@@ -14,7 +14,7 @@ A cross-platform mobile client for [Bassa](https://github.com/scorelab/Bassa)
  - Navigate to the Bassa folder inside the cloned local repository and follow the instructions given [here](https://github.com/scorelab/Bassa) to start the Bassa back-end.
  - Navigate back to the root of the cloned repository.
  - run ```yarn``` or ```npm install```.
- - run ```react-native run-android``` or ```react-native rum-ios```.
+ - run ```react-native run-android``` or ```react-native run-ios```.
 
 ## Tests
  - run ```yarn test``` or ```npm test```.
