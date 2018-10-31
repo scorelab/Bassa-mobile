@@ -203,8 +203,10 @@ class SignIn extends Component {
   }
   changeValues = (value) => {
     splitted_vals = value.split(":");
-    store.dispatch(setHostUrl(splitted_vals[0]));
-    store.dispatch(setHostPort(splitted_vals[1]));
+    url = "http://" + splitted_vals[0];
+    port = parseInt(splitted_vals[1]);
+    store.dispatch(setHostUrl(url));
+    store.dispatch(setHostPort(port));
     this.setState({ isPromptVisible: false });
   }
   handleDoubleTap = () => {
