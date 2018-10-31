@@ -1,20 +1,20 @@
-import { combineReducers } from 'redux';
-import { createNavigationReducer } from 'react-navigation-redux-helpers';
+import { combineReducers } from "redux";
+import { createNavigationReducer } from "react-navigation-redux-helpers";
 
-import AppNavigator from '../containers/RootNavigator';
-import appReducer from './appReducer';
-import userReducer from './userReducer';
-import downloadsReducer from './downloadsReducer';
-import constantsReducer from './constantsReducer';
+import getSetReducer from "./getsetConstReducer";
+import AppNavigator from "../containers/RootNavigator";
+import appReducer from "./appReducer";
+import userReducer from "./userReducer";
+import downloadsReducer from "./downloadsReducer";
 
 const navReducer = createNavigationReducer(AppNavigator);
 
 const rootReducer = combineReducers({
+  constants: getSetReducer,
   app: appReducer,
   user: userReducer,
   nav: navReducer,
-  downloads: downloadsReducer,
-  constants: constantsReducer,
+  downloads: downloadsReducer
 });
 
 export default rootReducer;
