@@ -1,9 +1,9 @@
-import { getsetActions } from "../actions/types";
+import { getsetActions } from '../actions/types';
 
 const initialState = {
-  hostUrl: "http://10.0.3.2",
+  hostUrl: 'http://10.0.3.2',
   hostPort: 5000,
-  key: "123456789"
+  key: '123456789'
 };
 
 function getSetReducer(state = initialState, action) {
