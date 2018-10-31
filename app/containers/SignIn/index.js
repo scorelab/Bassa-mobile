@@ -24,6 +24,9 @@ import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
+import { setHostUrl, setHostPort } from '../../actions/constantsActions';
+import { store } from '../../App';
+
 import Prompt from 'rn-prompt';
 
 const HEIGHT: number = Dimensions.get('window').height;
