@@ -11,6 +11,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Alert,
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
@@ -118,8 +119,20 @@ class SignIn extends Component {
     ).start();
   }
 
-  onSettingsPressed(e) {
+  onSettingsPressed() {
     this.setState({ isURLPromptVisible: true })
+  }
+
+  onSettingsClosed(port) {
+    // Port will be set, but its value wouldn't be yet accessible through the store
+    // so we use passed PORT in the alert
+    Alert.alert(
+      'Settings Changed',
+      `URL was successfully changed to ${this.props.constants.hostUrl}:${port ? port : this.props.constants.hostPort}`,
+      [
+        { text: 'OK' }
+      ]
+    )
   }
 
   renderSignInContainer() {
@@ -200,12 +213,12 @@ class SignIn extends Component {
               placeholder={"Bassa Server URL"}
               defaultValue={String(this.props.constants.hostUrl)}
               onCancel={() => this.setState({ isURLPromptVisible: false })}
-              onSubmit={txt => {
+              onSubmit={url => {
                 this.setState({
                   isPortPromptVisible: true,
                   isURLPromptVisible: false,
                 });
-                this.props.setUrl(txt);
+                this.props.setUrl(url);
               }}
             />
             <Prompt
@@ -213,12 +226,16 @@ class SignIn extends Component {
               visible={this.state.isPortPromptVisible}
               placeholder={"Bassa Server Port"}
               defaultValue={String(this.props.constants.hostPort)}
-              onCancel={() => this.setState({ isPortPromptVisible: false })}
-              onSubmit={(txt) => {
+              onCancel={() => {
+                this.setState({ isPortPromptVisible: false })
+                this.onSettingsClosed()
+              }}
+              onSubmit={(port) => {
                 this.setState({
                   isPortPromptVisible: false,
                 });
-                this.props.setPort(txt);
+                this.props.setPort(port);
+                this.onSettingsClosed(port);
               }}
             />
           </View>
