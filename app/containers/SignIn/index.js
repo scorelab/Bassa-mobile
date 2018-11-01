@@ -120,7 +120,7 @@ class SignIn extends Component {
   }
 
   onSettingsPressed() {
-    this.setState({ isURLPromptVisible: true })
+    this.setState({ isURLPromptVisible: true });
   }
 
   onSettingsClosed(port) {
@@ -130,9 +130,9 @@ class SignIn extends Component {
       'Settings Changed',
       `URL was successfully changed to ${this.props.constants.hostUrl}:${port ? port : this.props.constants.hostPort}`,
       [
-        { text: 'OK' }
-      ]
-    )
+        { text: 'OK' },
+      ],
+    );
   }
 
   renderSignInContainer() {
@@ -227,8 +227,8 @@ class SignIn extends Component {
               placeholder={"Bassa Server Port"}
               defaultValue={String(this.props.constants.hostPort)}
               onCancel={() => {
-                this.setState({ isPortPromptVisible: false })
-                this.onSettingsClosed()
+                this.setState({ isPortPromptVisible: false });
+                this.onSettingsClosed();
               }}
               onSubmit={(port) => {
                 this.setState({
