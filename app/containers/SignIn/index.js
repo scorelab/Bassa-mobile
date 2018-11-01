@@ -9,10 +9,9 @@ import {
   Dimensions,
   Platform,
   StyleSheet,
-  View,
   Alert,
-  TouchableHighlight,
-  PanResponder
+  View,
+  PanResponder,
 } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
@@ -20,12 +19,10 @@ import PropTypes from 'prop-types';
 import Button from 'react-native-button';
 
 import { signIn } from '../../actions/userActions';
+import { setHostPort, setHostUrl } from '../../actions/constantsActions'
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
-
-import { setHostUrl, setHostPort } from '../../actions/constantsActions';
-import { store } from '../../App';
 
 import Prompt from 'rn-prompt';
 
@@ -55,23 +52,23 @@ class SignIn extends Component {
       usernameError: '',
       passwordError: '',
       isLoading: false,
-      isPromptVisible: false
+      isPromptVisible: false,
     };
 
     this.passwordInputRef = React.createRef();
     this.onSignInPress = this.onSignInPress.bind(this);
+    this.changeValues = this.changeValues.bind(this);
+    this.handleDoubleTap = this.handleDoubleTap.bind(this);
   }
 
   componentDidMount() {
     setTimeout(() => this.startComponentAnimation(), 1000);
   }
-  
+
   componentWillMount() {
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder:(evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => {
-        this.handleDoubleTap()
-      }
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => this.handleDoubleTap(),
     });
   }
 
@@ -128,6 +125,31 @@ class SignIn extends Component {
         useNativeDriver: true,
       },
     ).start();
+  }
+
+  changeValues(value) {
+    const addr = value.replace(/https?\:\/\//gi, "");
+    splitted_vals = addr.split(":");
+    url = "http://" + splitted_vals[0];
+    port = parseInt(splitted_vals[1]);
+    this.props.setHostUrl(url);
+    this.props.setHostPort(port);
+    this.setState({ isPromptVisible: false });
+    // Display success message to the user
+    Alert.alert(
+      "Values changed",
+      `Server URL has been successfully changed to ${url}:${port}!`,
+    );
+  }
+
+  handleDoubleTap() {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+      this.setState({ isPromptVisible: true });
+    } else {
+      this.lastTap = now;
+    }
   }
 
   renderSignInContainer() {
@@ -201,24 +223,9 @@ class SignIn extends Component {
       </Animated.View>
     );
   }
-  changeValues = (value) => {
-    splitted_vals = value.split(":");
-    url = "http://" + splitted_vals[0];
-    port = parseInt(splitted_vals[1]);
-    store.dispatch(setHostUrl(url));
-    store.dispatch(setHostPort(port));
-    this.setState({ isPromptVisible: false });
-  }
-  handleDoubleTap = () => {
-    const now = Date.now();
-    const DOUBLE_PRESS_DELAY = 300;
-    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
-      this.setState({ isPromptVisible: true });
-    } else {
-      this.lastTap = now;
-    }
-  }
+
   render() {
+    const { hostUrl, hostPort } = this.props.constants;
     return (
       <ViewWrapper
         withFade={false}
@@ -230,33 +237,34 @@ class SignIn extends Component {
         <ScrollView
           keyboardDismissMode={'on-drag'}
           style={styles.container}>
-          <View style={styles.topArea} {...this._panResponder.panHandlers}/>
+          <View style={styles.topArea} {...this._panResponder.panHandlers} />
           <View
             style={styles.mainContainer}>
             <Prompt
-            title={'Change URL and port'}
-            placeholder={'Split them by colon (:)'}
-            submitText={'Change'}
-            visible={this.state.isPromptVisible}
-            onCancel={() => this.setState({
-              isPromptVisible: false,
-            })}
-            onSubmit={value => this.changeValues(value)} />
-              <Animated.View
-                style={[styles.logoBox, this.state.movingContainer === 'left' ? { height: HEIGHT } : {}, {
-                  transform: [
-                    {
-                      translateY: this.state.moveAnimation.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0, -(HEIGHT * 0.275)],
-                      }),
-                    },
-                  ],
-                }]}
-              >
-                <Image
-                  source={require('../../images/bassa.png')} />
-              </Animated.View>
+              title={'Change URL and port'}
+              placeholder={'Split them by colon (:)'}
+              submitText={'Change'}
+              defaultValue={`${hostUrl}:${hostPort}`}
+              visible={this.state.isPromptVisible}
+              onCancel={() => this.setState({
+                isPromptVisible: false,
+              })}
+              onSubmit={value => this.changeValues(value)} />
+            <Animated.View
+              style={[styles.logoBox, this.state.movingContainer === 'left' ? { height: HEIGHT } : {}, {
+                transform: [
+                  {
+                    translateY: this.state.moveAnimation.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -(HEIGHT * 0.275)],
+                    }),
+                  },
+                ],
+              }]}
+            >
+              <Image
+                source={require('../../images/bassa.png')} />
+            </Animated.View>
             {this.renderSignInContainer()}
           </View>
           <LoadingIndicator
@@ -270,10 +278,13 @@ class SignIn extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   app: state.app,
+  constants: state.constants,
 });
 
 const mapDispatchToProps = dispatch => ({
   signIn: (username, password) => dispatch(signIn(username, password)),
+  setHostUrl: url => dispatch(setHostUrl(url)),
+  setHostPort: port => dispatch(setHostPort(port)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
