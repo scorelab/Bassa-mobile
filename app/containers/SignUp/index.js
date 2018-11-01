@@ -10,7 +10,9 @@ import {
   Platform,
   StyleSheet,
   View,
+  TextInput,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -67,7 +69,12 @@ class SignUp extends Component {
     if (this.isValid()) {
       this.setState({ isLoading: true });
       this.startSignUpAnimation();
-      this.props.signUp(this.state.username, this.state.email, this.state.password, this.state.confirmPassword);
+      this.props.signUp(
+        this.state.username,
+        this.state.email,
+        this.state.password,
+        this.state.confirmPassword,
+      );
     }
   }
 
@@ -94,15 +101,22 @@ class SignUp extends Component {
       return false;
     }
     if (this.state.password !== '' && this.state.password.length < 8) {
-      this.setState({ passwordError: 'Password must have at least 8 characters' });
+      this.setState({
+        passwordError: 'Password must have at least 8 characters',
+      });
       return false;
     }
     if (this.state.confirmPassword === '') {
       this.setState({ confirmPasswordError: 'Confirm Password is required' });
       return false;
     }
-    if (this.state.confirmPassword !== '' && this.state.confirmPassword !== this.state.password) {
-      this.setState({ confirmPasswordError: 'Confirm Password does not match' });
+    if (
+      this.state.confirmPassword !== '' &&
+      this.state.confirmPassword !== this.state.password
+    ) {
+      this.setState({
+        confirmPasswordError: 'Confirm Password does not match',
+      });
       return false;
     }
     return true;
@@ -162,71 +176,95 @@ class SignUp extends Component {
       >
         <View
           style={styles.signUpContainer}>
-          <TextField
-            label={'Username'}
-            error={this.state.usernameError}
-            tintColor={'#FFF'}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
-            autoCapitalize={'none'}
-            onChangeText={text => this.setState({ usernameError: null, username: text })}
-            returnKeyType={'next'}
-            value={this.state.username}
-            onSubmitEditing={() => {
-              this.emaiInputRef.current.focus();
-            }}
-          />
-          <TextField
-            label={'Email'}
-            ref={this.emaiInputRef}
-            error={this.state.emailError}
-            tintColor={'#FFF'}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
-            autoCapitalize={'none'}
-            onChangeText={text => this.setState({ emailError: null, email: text })}
-            returnKeyType={'next'}
-            value={this.state.email}
-            onSubmitEditing={() => {
-              this.passwordInputRef.current.focus();
-            }}
-          />
-          <TextField
-            ref={this.passwordInputRef}
-            label={'Password'}
-            tintColor={'#FFF'}
-            error={this.state.passwordError}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
-            autoCapitalize={'none'}
-            secureTextEntry={true}
-            onChangeText={text => this.setState({ passwordError: null, password: text })}
-            returnKeyType={'next'}
-            value={this.state.password}
-            onSubmitEditing={() => {
-              this.confirmPasswordInputRef.current.focus();
-            }}
-          />
-          <TextField
-            ref={this.confirmPasswordInputRef}
-            label={'Confirm Password'}
-            tintColor={'#FFF'}
-            error={this.state.confirmPasswordError}
-            textColor={'#FFF'}
-            baseColor={'#FFF'}
-            labelTextStyle={{ fontWeight: '500' }}
-            autoCapitalize={'none'}
-            secureTextEntry={true}
-            onChangeText={text => this.setState({ confirmPasswordError: null, confirmPassword: text })}
-            returnKeyType={'next'}
-            value={this.state.confirmPassword}
-            onSubmitEditing={() => {
-              this.onSignUpPress();
-            }}
-          />
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="user"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
+            <TextInput
+              placeholder={'User name'}
+              placeholderTextColor={'#303030'}
+              value={this.state.username}
+              onChangeText={text => this.setState({ username: text })}
+              underlineColorAndroid={'transparent'}
+              style={styles.signUpTextField}
+              onSubmitEditing={() => {
+                this.emaiInputRef.current.focus();
+              }}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+            />
+          </View>
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="mail"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
+            <TextInput
+              ref={this.emaiInputRef}
+              placeholder={'Email'}
+              placeholderTextColor={'#303030'}
+              value={this.state.email}
+              onChangeText={text => this.setState({ email: text })}
+              underlineColorAndroid={'transparent'}
+              style={styles.signUpTextField}
+              onSubmitEditing={() => {
+                this.passwordInputRef.current.focus();
+              }}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+            />
+          </View>
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="lock"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
+            <TextInput
+              ref={this.passwordInputRef}
+              placeholder={'Password'}
+              placeholderTextColor={'#303030'}
+              value={this.state.password}
+              onChangeText={text => this.setState({ password: text })}
+              underlineColorAndroid={'transparent'}
+              style={styles.signUpTextField}
+              onSubmitEditing={() => {
+                this.confirmPasswordInputRef.current.focus();
+              }}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+              secureTextEntry={true}
+            />
+          </View>
+          <View
+            style={styles.signUpTextFieldContainer}>
+            <Icon
+              name="lock"
+              size={30}
+              style={{ marginRight: 8 }}
+            />
+            <TextInput
+              ref={this.confirmPasswordInputRef}
+              placeholder={'Confirm Password'}
+              placeholderTextColor={'#303030'}
+              value={this.state.confirmPassword}
+              onChangeText={text => this.setState({ confirmPassword: text })}
+              underlineColorAndroid={'transparent'}
+              style={styles.signUpTextField}
+              onSubmitEditing={() => {
+                this.onSignUpPress();
+              }}
+              autoCapitalize={'none'}
+              returnKeyType={'go'}
+              secureTextEntry={true}
+            />
+          </View>
           <View
             style={styles.buttonContainer}>
             <Button
@@ -236,15 +274,7 @@ class SignUp extends Component {
             >
               Sign Up
             </Button>
-            <Button
-              style={styles.buttonTitle}
-              containerStyle={styles.buttonWrapper}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              Back to Sign In
-            </Button>
-            <View
-              style={styles.spacer} />
+            {/* <View style={styles.spacer} /> */}
           </View>
         </View>
       </Animated.View>
@@ -256,36 +286,42 @@ class SignUp extends Component {
       <ViewWrapper
         withFade={false}
         withMove={false}
-        fromBackgroundStyle={styles.wrapperToBackground}>
+        fromBackgroundStyle={styles.wrapperToBackground}
+      >
         <StatusBar
           backgroundColor={theme.PRIMARY_STATUS_BAR_COLOR} />
         <ScrollView
           keyboardDismissMode={'on-drag'}
-          style={styles.container}>
-          <View style={styles.topArea} />
+          style={styles.container}
+        >
           <View
-            style={styles.mainContainer}>
+            style={styles.topArea} />
+          <View
+            style={styles.mainContainer}
+          >
             <Animated.View
-              style={[styles.logoBox, this.state.movingContainer === 'left' ? { height: HEIGHT } : {}, {
-                transform: [
-                  {
-                    translateY: this.state.moveAnimation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -(HEIGHT * 0.275)],
-                    }),
-                  },
-                ],
-              }]}
+              style={[
+                styles.logoBox,
+                this.state.movingContainer === 'left' ? { height: HEIGHT } : {},
+                {
+                  transform: [
+                    {
+                      translateY: this.state.moveAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, -(HEIGHT * 0.275)],
+                      }),
+                    },
+                  ],
+                },
+              ]}
             >
               <Image
                 source={require('../../images/bassa.png')} />
             </Animated.View>
             {this.renderSignUpContainer()}
-
           </View>
           <LoadingIndicator
             isVisible={this.state.isLoading} />
-
         </ScrollView>
       </ViewWrapper>
     );
@@ -298,17 +334,21 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: (username, email, password, confirmPassword) => dispatch(signUp(username, email, password, confirmPassword)),
+  signUp: (username, email, password, confirmPassword) =>
+    dispatch(signUp(username, email, password, confirmPassword)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignUp);
 
 const styles = StyleSheet.create({
   wrapperToBackground: {
     backgroundColor: theme.PRIMARY_COLOR,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 10,
   },
   spacer: {
     height: 100,
@@ -324,43 +364,63 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonWrapper: {
-    height: 35,
     borderRadius: 100,
-    width: 200,
-    borderWidth: 2,
+    width: '100%',
+    borderWidth: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#FFF',
-    padding: 5,
+    backgroundColor: theme.PRIMARY_COLOR,
+    elevation: 15,
+    paddingVertical: 16,
     alignSelf: 'center',
-    marginTop: 20,
+    marginBottom: 15,
   },
   buttonTitle: {
-    fontWeight: '400',
+    fontWeight: '600',
     textAlign: 'center',
     color: '#FFF',
   },
   controlsContainer: {
     height: HEIGHT,
-    paddingHorizontal: 35,
+    paddingHorizontal: 10,
   },
   signUpContainer: {
     marginTop: HEIGHT * 0.33,
-    paddingBottom: 70,
+    backgroundColor: '#efefef',
+    borderRadius: 10,
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+    elevation: 5,
   },
   signUpText: {
     color: theme.TEXT_COLOR_INVERT,
     fontSize: 14,
     fontWeight: '300',
   },
+  signUpTextFieldContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#FFF',
+    borderRadius: 100,
+    elevation: 15,
+    marginBottom: 15,
+    paddingHorizontal: 20,
+  },
+  signUpTextField: {
+    fontSize: 18,
+    paddingVertical: 16,
+    fontWeight: '600',
+    flex: 1,
+  },
   mainContainer: {
     flex: 1,
     height: HEIGHT,
     justifyContent: 'center',
-    marginTop: (-HEIGHT / 5) - (Platform.OS === 'ios' ? -2.5 : 9.5),
+    marginTop: -HEIGHT / 5 - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
-    height: HEIGHT / 5,
+    height: HEIGHT / 6,
     zIndex: 10,
     backgroundColor: 'transparent',
   },
