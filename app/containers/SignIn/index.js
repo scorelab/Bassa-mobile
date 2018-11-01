@@ -9,8 +9,10 @@ import {
   Dimensions,
   Platform,
   StyleSheet,
+  Alert,
   View,
   TextInput,
+  PanResponder,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { TextField } from 'react-native-material-textfield';
@@ -19,9 +21,12 @@ import PropTypes from 'prop-types';
 import Button from 'react-native-button';
 
 import { signIn } from '../../actions/userActions';
+import { setHostPort, setHostUrl } from '../../actions/constantsActions'
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
 import LoadingIndicator from '../../components/LoadingIndicator';
+
+import Prompt from 'rn-prompt';
 
 const HEIGHT: number = Dimensions.get('window').height;
 
@@ -49,14 +54,24 @@ class SignIn extends Component {
       usernameError: '',
       passwordError: '',
       isLoading: false,
+      isPromptVisible: false,
     };
 
     this.passwordInputRef = React.createRef();
     this.onSignInPress = this.onSignInPress.bind(this);
+    this.changeValues = this.changeValues.bind(this);
+    this.handleDoubleTap = this.handleDoubleTap.bind(this);
   }
 
   componentDidMount() {
     setTimeout(() => this.startComponentAnimation(), 1000);
+  }
+
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => this.handleDoubleTap(),
+    });
   }
 
   onSignInPress() {
@@ -112,6 +127,31 @@ class SignIn extends Component {
         useNativeDriver: true,
       },
     ).start();
+  }
+
+  changeValues(value) {
+    const addr = value.replace(/https?\:\/\//gi, "");
+    splitted_vals = addr.split(":");
+    url = "http://" + splitted_vals[0];
+    port = parseInt(splitted_vals[1]);
+    this.props.setHostUrl(url);
+    this.props.setHostPort(port);
+    this.setState({ isPromptVisible: false });
+    // Display success message to the user
+    Alert.alert(
+      "Values changed",
+      `Server URL has been successfully changed to ${url}:${port}!`,
+    );
+  }
+
+  handleDoubleTap() {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+      this.setState({ isPromptVisible: true });
+    } else {
+      this.lastTap = now;
+    }
   }
 
   renderSignInContainer() {
@@ -202,6 +242,7 @@ class SignIn extends Component {
   }
 
   render() {
+    const { hostUrl, hostPort } = this.props.constants;
     return (
       <ViewWrapper
         withFade={false}
@@ -213,10 +254,19 @@ class SignIn extends Component {
         <ScrollView
           keyboardDismissMode={'on-drag'}
           style={styles.container}>
-          <View
-            style={styles.topArea} />
+          <View style={styles.topArea} {...this._panResponder.panHandlers} />
           <View
             style={styles.mainContainer}>
+            <Prompt
+              title={'Change URL and port'}
+              placeholder={'Split them by colon (:)'}
+              submitText={'Change'}
+              defaultValue={`${hostUrl}:${hostPort}`}
+              visible={this.state.isPromptVisible}
+              onCancel={() => this.setState({
+                isPromptVisible: false,
+              })}
+              onSubmit={value => this.changeValues(value)} />
             <Animated.View
               style={[
                 styles.logoBox,
@@ -249,10 +299,13 @@ class SignIn extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   app: state.app,
+  constants: state.constants,
 });
 
 const mapDispatchToProps = dispatch => ({
   signIn: (username, password) => dispatch(signIn(username, password)),
+  setHostUrl: url => dispatch(setHostUrl(url)),
+  setHostPort: port => dispatch(setHostPort(port)),
 });
 
 export default connect(
@@ -339,7 +392,8 @@ const styles = StyleSheet.create({
     marginTop: -HEIGHT / 5 - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
-    height: HEIGHT / 5,
+    height: HEIGHT / 7,
+    margin: 20,
     zIndex: 10,
     backgroundColor: 'transparent',
   },
