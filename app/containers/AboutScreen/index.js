@@ -114,17 +114,19 @@ class AboutScreen extends Component {
       >
         <View
           style={styles.aboutScreenContainer}>
-          <Text
-            style={styles.aboutScreenHeader}
-          >
-            Bassa Mobile {VersionNumber.appVersion}
-          </Text>
-          <Text style={styles.aboutScreenDescription}>Bassa solves the problem of wasting internet bandwidth by queuing a download if it is larger than a given threshold value in high traffic and when the traffic is low, it completes the download of the files. After the files are downloaded, the users can get their files from the local servers which do not require external internet bandwidth.</Text>
-          <Text
-            style={styles.aboutScreenDescription}
-          >
-            The Sustainable Computing Research Group (SCoRe) has conducted research covering various aspects of sensor networks, embeded systems, digital forensic, information security, mobile applications, cloud, blockchain and software tools. The goal of our research is to generate computing solutions through identifying low cost methodologies and strategies that lead to sustainability.
-          </Text>
+          <ScrollView>
+            <Text
+              style={styles.aboutScreenHeader}
+            >
+              Bassa Mobile {VersionNumber.appVersion}
+            </Text>
+            <Text style={styles.aboutScreenDescription}>Bassa solves the problem of wasting internet bandwidth by queuing a download if it is larger than a given threshold value in high traffic and when the traffic is low, it completes the download of the files. After the files are downloaded, the users can get their files from the local servers which do not require external internet bandwidth.</Text>
+            <Text
+              style={styles.aboutScreenDescription}
+            >
+              The Sustainable Computing Research Group (SCoRe) has conducted research covering various aspects of sensor networks, embeded systems, digital forensic, information security, mobile applications, cloud, blockchain and software tools. The goal of our research is to generate computing solutions through identifying low cost methodologies and strategies that lead to sustainability.
+            </Text>
+          </ScrollView>
         </View>
       </Animated.View>
     );
@@ -206,20 +208,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   controlsContainer: {
-    paddingHorizontal: 15,
+    height: HEIGHT,
+    paddingHorizontal: 10,
   },
   aboutScreenContainer: {
     marginTop: HEIGHT * 0.33,
+    marginBottom: 10,
+    backgroundColor: '#efefef',
+    borderRadius: 10,
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+    elevation: 5,
   },
   aboutScreenHeader: {
     fontSize: 25,
     fontWeight: '600',
-    color: theme.TEXT_COLOR_INVERT,
+    color: "#000",
   },
   aboutScreenDescription: {
     fontSize: 18,
     fontWeight: '400',
-    color: theme.TEXT_COLOR_INVERT,
+    color: "#000",
     marginBottom: 10
   },
   mainContainer: {
@@ -228,7 +237,7 @@ const styles = StyleSheet.create({
     marginTop: -HEIGHT / 5 - (Platform.OS === 'ios' ? -2.5 : 9.5),
   },
   topArea: {
-    height: HEIGHT / 5,
+    height: HEIGHT / 7,
     zIndex: 10,
     backgroundColor: 'transparent',
   },
