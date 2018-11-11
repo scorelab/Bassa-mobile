@@ -1,11 +1,16 @@
 import React from 'react';
-import { createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createDrawerNavigator,
+  createMaterialTopTabNavigator,
+} from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 // root routes
 import Init from './Init';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import AboutScreen from './AboutScreen'
+import AboutScreen from './AboutScreen';
 
 import CustomDrawer from './CustomDrawer';
 
@@ -29,30 +34,62 @@ const tabBarOptions = {
   scrollEnabled: false,
 };
 
-export const DownloadsTabs = createMaterialTopTabNavigator({
-  InProgressDownloads: { screen: InProgressDownloads },
-  CompletedDownloads: { screen: CompletedDownloads },
-
-}, {
+export const DownloadsTabs = createMaterialTopTabNavigator(
+  {
+    InProgressDownloads: { screen: InProgressDownloads },
+    CompletedDownloads: { screen: CompletedDownloads },
+  },
+  {
     initialRouteName: 'InProgressDownloads',
     swipeEnabled: false,
     tabBarOptions,
-  });
+  },
+);
 
-export const AccountsTabs = createMaterialTopTabNavigator({
-  Approvals: { screen: Approvals },
-  QuotaUsage: { screen: QuotaUsage },
-
-}, {
+export const AccountsTabs = createMaterialTopTabNavigator(
+  {
+    Approvals: { screen: Approvals },
+    QuotaUsage: { screen: QuotaUsage },
+  },
+  {
     initialRouteName: 'Approvals',
     swipeEnabled: false,
     tabBarOptions,
-  });
+  },
+);
+
+const createStackForDrawer = (stackName, screen, headerTitle) =>
+  createStackNavigator(
+    {
+      [stackName]: { screen },
+    },
+    {
+      navigationOptions: ({ navigation }) => ({
+        // If unspecified, fall back to default navigationOptions' title (set in Component)
+        title: headerTitle || undefined,
+        headerLeft: <Icon
+          name="md-menu"
+          style={{ color: '#FFF', fontSize: 35, marginLeft: 20 }}
+          onPress={() => navigation.openDrawer()}
+        />,
+        headerStyle: {
+          backgroundColor: theme.PRIMARY_COLOR,
+          elevation: 0,
+        },
+        headerTintColor: theme.TEXT_COLOR_INVERT,
+      }),
+    },
+  );
 
 const Drawer = createDrawerNavigator(
   {
-    Downloads: { screen: DownloadsTabs },
-    Accounts: { screen: AccountsTabs },
+    Downloads: {
+      screen: createStackForDrawer('Downloads', DownloadsTabs, 'Downloads'),
+    },
+    Accounts: createStackForDrawer('Accounts', AccountsTabs, 'Accounts'),
+    About: {
+      screen: createStackForDrawer('About', AboutScreen),
+    },
   },
   {
     contentComponent: props => <CustomDrawer {...props} />,
@@ -63,7 +100,6 @@ const AppNavigator = createStackNavigator({
   Init: { screen: Init },
   SignIn: { screen: SignIn },
   SignUp: { screen: SignUp },
-  About: { screen: AboutScreen },
   MainDrawer: { screen: Drawer, navigationOptions: { header: null } },
 });
 
