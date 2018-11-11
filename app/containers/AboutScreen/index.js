@@ -27,7 +27,7 @@ const HEIGHT: number = Dimensions.get('window').height;
 
 class AboutScreen extends Component {
   static navigationOptions = {
-    header: null,
+    title: 'About Bassa',
   };
 
   static propTypes = {
