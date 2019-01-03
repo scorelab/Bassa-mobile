@@ -17,7 +17,7 @@ import { TextField } from 'react-native-material-textfield';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-native-button';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signUp } from '../../actions/userActions';
 import { theme } from '../../styles';
 import ViewWrapper from '../../components/ViewWrapper';
@@ -283,6 +283,7 @@ class SignUp extends Component {
 
   render() {
     return (
+     <KeyboardAwareScrollView>
       <ViewWrapper
         withFade={false}
         withMove={false}
@@ -324,6 +325,7 @@ class SignUp extends Component {
             isVisible={this.state.isLoading} />
         </ScrollView>
       </ViewWrapper>
+     </KeyboardAwareScrollView>
     );
   }
 }
